@@ -67,9 +67,9 @@ class Hconstruct:
         b3 = np.exp(complex(0,kd3)) 
         #b4 = np.exp(complex(0,kd4)) 
         
-        c1 = np.exp(complex(0,kd1)) # conjugate phase terms
-        c2 = np.exp(complex(0,kd2)) 
-        c3 = np.exp(complex(0,kd3)) 
+        c1 = np.exp(-complex(0,kd1)) # conjugate phase terms
+        c2 = np.exp(-complex(0,kd2)) 
+        c3 = np.exp(-complex(0,kd3)) 
         #c4 = np.exp(complex(0,kd4))
         
         self.g0 = b1 + b2 + b3 #+ #b4 #Actual phase factors
@@ -96,10 +96,11 @@ class Hconstruct:
         
         if signifier == 'fcc':
             
-            self.Es = self.sssig
-            self.Ep = (1/2)*(self.ppsig + self.pppi)
-            self.Esp = -(1/np.sqrt(2))*self.spsig
-            self.Exy = (1/2)*(self.ppsig - self.pppi)
+            const = (7.62/(1.61**2)) #From eqn V_{ll'm} = n_{ll'm}*h**2/m*d**2
+            self.Es = self.sssig*const
+            self.Ep = (1/2)*(self.ppsig + self.pppi)*const
+            self.Esp = -(1/np.sqrt(2))*self.spsig*const
+            self.Exy = (1/2)*(self.ppsig - self.pppi)*const
             
             
         
@@ -208,37 +209,47 @@ class Hconstruct:
         w, v = la.eig(H)
         return w
     
-    def band_structure_s(self, ki, kf, M):
+    def band_structure_s(self, ki, kf, ax, reverse, n1, n2):
         """ kf and ki must be 1x3 arrays
         """
-        self.Hamiltonian_s()
+        #self.Hamiltonian_s()
         #self.energies = []
         k_diff = kf-ki
-        self.energies.append(M[0])
-        self.kvals.append(np.sqrt(ki[0]**2 + ki[1]**2 + ki[2]**2))
-        for i in range(20):
-            kr = ki + (i/20)*k_diff
+        self.kvals = []
+        self.energies = []
+        
+        #self.energies.append(M[0])
+        #self.kvals.append(np.sqrt(ki[0]**2 + ki[1]**2 + ki[2]**2))
+        for i in range(150):
+            kr = ki + (i/150)*k_diff
             self.phasefactors(kr )
-            self.energies.append(self.Es*self.g0)
+            self.energies.append(-self.Es*self.g0)
             self.kvals.append(np.sqrt(kr[0]**2 + kr[1]**2 + kr[2]**2) )
             
-        fig = plt.figure()
-        ax = fig.add_subplot(111)
+        #fig = plt.figure()
+        #ax = fig.add_subplot(111)
         ax.plot(self.kvals, self.energies)
-        ax.set_xlabel('k')
-        ax.set_ylabel('E')
-        ax.set_title('s-band: fcc')
+        #ax.set_xlabel('k')
+        #ax.set_ylabel('E')
+        ax.set_title('%s to %s'%(n1, n2)) 
+        if reverse==True:
+            ax.set_xlim([np.max(self.kvals), np.min(self.kvals)])
         plt.show()
             
             
-    def band_structure_p(self, ki, kf):
+    def band_structure_p(self, ki, kf, ax, reverse, n1, n2):
         """ kf and ki must be 1x3 arrays
         """
         #M = self.Hamiltonian_p(ki)
         #self.energies = []
+        self.kvals = []
+        self.px_energies = []
+        self.py_energies = []
+        self.pz_energies = []
         k_diff = kf-ki
-        for i in range(50):
-            kr = ki + (i/50)*k_diff
+        loops = 200
+        for i in range(loops):
+            kr = ki + (i/float(loops))*k_diff
             #self.phasefactors(kr )
             self.M = -self.Hamiltonian_p(kr)
             eigenvals = self.eigenvalues(self.M)
@@ -248,36 +259,84 @@ class Hconstruct:
             self.pz_energies.append(eigenvals[2])
             self.kvals.append(np.sqrt(kr[0]**2 + kr[1]**2 + kr[2]**2))
             
-        fig = plt.figure()
-        ax = fig.add_subplot(111)
+        #fig = plt.figure()
+        #ax = fig.add_subplot(111)
         ax.plot(self.kvals, np.real(self.px_energies))#, marker=style, color=k)
         ax.plot(self.kvals, np.real(self.py_energies))#, bo)
         ax.plot(self.kvals, np.real(self.pz_energies))#, r*)
-        ax.set_xlabel('k')
-        ax.set_ylabel('E')
-        ax.set_title('p-band: fcc')
-        plt.show()          
+        
+        ax.set_title('%s to %s'%(n1, n2)) 
+        if reverse==True:
+            ax.set_xlim([np.max(self.kvals), np.min(self.kvals)])
                 
-            
+                
+#def band_structure_plotting_fcc(con):
+    
+    
 def sband_script(con):
 
-    M = con.Hamiltonian_s()
-    print('M', M)
-    ki = (2*np.pi/con.a)*np.array([0,0,0])
-    kf = (2*np.pi/con.a)*np.array([0,1,0])
-    con.band_structure_s(ki, kf, M )
+    #M = con.Hamiltonian_s()
+    #print('M', M)
+    X = (2*np.pi/con.a)*np.array([0,1,0])
+    L = (2*np.pi/con.a)*np.array([1,1,1])
+    W = (2*np.pi/con.a)*np.array([0.5,1,0])
+    Gamma = np.array([0,0,0])
+    
+    ki = L#(2*np.pi/con.a)*np.array([0,0,0])
+    kf = Gamma#(2*np.pi/con.a)*np.array([0,1,0])
+    fig, axes = plt.subplots(1,4,sharey='all')
+    #print(axes)
+    ax1 = axes[0] #fig.add_subplot(141)
+    ax2 = axes[1]#fig.add_subplot(142)
+    ax3 = axes[2]#fig.add_subplot(143)
+    ax4 = axes[3]#3]#fig.add_subplot(144)
+    #ax5 = fig.add_subplot(165)
+    #ax6 = fig.add_subplot(166)
+    con.band_structure_s(Gamma, X, ax1, False, 'Gamma', 'X')
+    ax1.set_ylabel('E (eV)')
+    con.band_structure_s(X, W, ax2, False, 'X', 'W')
+    con.band_structure_s(W, L, ax3, False, 'W', 'L')
+    ax3.set_xlabel('¦K¦')
+    con.band_structure_s(L, Gamma, ax4, True, 'L', 'Gamma')
+    
+    
+    #xticklabels = ax1.get_xticklabels() + ax2.get_xticklabels() 
+    #plt.setp(xticklabels, visible=False)
+    plt.suptitle('p-bands:fcc')
+    plt.show()  
+    #con.band_structure_s(ki, kf, M)
     
 def pband_script(con):
+    
+    X = (2*np.pi/con.a)*np.array([0,1,0])
+    L = (2*np.pi/con.a)*np.array([1,1,1])
+    W = (2*np.pi/con.a)*np.array([0.5,1,0])
+    Gamma = np.array([0,0,0])
 
-    ki = (2*np.pi/con.a)*np.array([0,0,0])
-    kf = (2*np.pi/con.a)*np.array([0,1,0])
+    ki = Gamma#(2*np.pi/con.a)*np.array([0,0,0])
+    kf = X #(2*np.pi/con.a)*np.array([0,1,0])
     #M = con.Hamiltonian_p(ki)
     #print('M', M)
-    con.band_structure_p(ki, kf )
+    #fig = plt.figure()
+    fig, axes = plt.subplots(1,4,sharey='all')
+    print(axes)
+    ax1 = axes[0] #fig.add_subplot(141)
+    ax2 = axes[1]#fig.add_subplot(142)
+    ax3 = axes[2]#fig.add_subplot(143)
+    ax4 = axes[3]#3]#fig.add_subplot(144)
+    #ax5 = fig.add_subplot(165)
+    #ax6 = fig.add_subplot(166)
+    con.band_structure_p(Gamma, X, ax1, False, 'Gamma', 'X')
+    con.band_structure_p(X, W, ax2, False, 'X', 'W')
+    con.band_structure_p(W, L, ax3, False, 'W', 'L')
+    con.band_structure_p(L, Gamma, ax4, True, 'L', 'Gamma')
+    
+    plt.suptitle('p-bands:fcc')
+    plt.show()  
     
 
 con = Hconstruct() 
-pband_script(con) 
+sband_script(con) 
 
 #con.phasefactors()
 #H = con.Hamiltonian()

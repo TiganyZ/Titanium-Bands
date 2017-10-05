@@ -176,8 +176,8 @@ class Hconstruct:
     
         M = np.array([
                 [self.Ep*self.gxx,  self.Exy*self.gxy,  self.Exy*self.gxz ], 
-                [self.Exy*self.gxyc,  self.Ep*self.gyy,  self.Exy*self.gyz ], 
-                [self.Exy*self.gxzc,  self.Exy*self.gyzc,  self.Ep*self.gzz ]
+                [self.Exy*self.gxy,  self.Ep*self.gyy,  self.Exy*self.gyz ], 
+                [self.Exy*self.gxz,  self.Exy*self.gyz,  self.Ep*self.gzz ]
                     ])
         #Array of Hamiltonian matrix with energy values 
         return M
@@ -220,11 +220,13 @@ class Hconstruct:
         
         #self.energies.append(M[0])
         #self.kvals.append(np.sqrt(ki[0]**2 + ki[1]**2 + ki[2]**2))
-        for i in range(150):
-            kr = ki + (i/150)*k_diff
+        loops = 150
+        for i in range(loops):
+            kr = ki + (i/loops)*k_diff
             self.phasefactors(kr )
             self.energies.append(-self.Es*self.g0)
-            self.kvals.append(np.sqrt(kr[0]**2 + kr[1]**2 + kr[2]**2) )
+            #self.kvals.append(np.sqrt(kr[0]**2 + kr[1]**2 + kr[2]**2) )
+            self.kvals.append(i/float(loops))
             
         #fig = plt.figure()
         #ax = fig.add_subplot(111)
@@ -257,7 +259,9 @@ class Hconstruct:
             self.px_energies.append(eigenvals[0])
             self.py_energies.append(eigenvals[1])
             self.pz_energies.append(eigenvals[2])
-            self.kvals.append(np.sqrt(kr[0]**2 + kr[1]**2 + kr[2]**2))
+            self.kvals.append((i/float(loops)))
+            #self.kvals.append(np.sqrt(kr[0]**2 + kr[1]**2 + kr[2]**2))
+
             
         #fig = plt.figure()
         #ax = fig.add_subplot(111)
@@ -303,7 +307,7 @@ def sband_script(con):
     
     con.band_structure_s(L, Gamma, ax4, True, 'L', 'Gamma')
     con.band_structure_s(Gamma, K, ax5, False, 'Gamma', 'K')
-    con.band_structure_s(U, X, ax6, True, 'U', 'X')
+    con.band_structure_s(U, X, ax6, False, 'U', 'X')
     ax1.set_ylabel('E (eV)')
     ax3.set_xlabel('¦K¦')
     #xticklabels = ax1.get_xticklabels() + ax2.get_xticklabels() 
@@ -341,7 +345,7 @@ def pband_script(con):
     con.band_structure_p(W, L, ax3, False, 'W', 'L')
     con.band_structure_p(L, Gamma, ax4, True, 'L', 'Gamma')
     con.band_structure_p(Gamma, K, ax5, False, 'Gamma', 'K')
-    con.band_structure_p(U, X, ax6, True, 'U', 'X')
+    con.band_structure_p(U, X, ax6, False, 'U', 'X')
     ax3.set_xlabel('¦K¦')
     ax1.set_ylabel('E (eV)')
     plt.suptitle('p-bands:fcc')
@@ -349,7 +353,7 @@ def pband_script(con):
     
 
 con = Hconstruct() 
-pband_script(con) 
+sband_script(con) 
 
 #con.phasefactors()
 #H = con.Hamiltonian()

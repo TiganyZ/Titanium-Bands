@@ -21,7 +21,11 @@ class Hconstruct:
     
     def __init__(self, k=np.array([0,0,0]), H = np.ones(5), a = 1.,#1.61, #a is in Angstrom
                  d1=np.array([0,1,1]), d2=np.array([1,0,1]), 
-                 d3=np.array([1,1,0]), Es=1, Ep=1, 
+                 d3=np.array([1,1,0]), d4=np.array([0,-1,1]
+                 d5=np.array([0,1,-1], d6=np.array([0,-1,-1]
+                 d7=np.array([-1,0,1], d8=np.array([1,0,-1], d9=np.array([-1,0,-1], 
+                d10=np.array([-1,1,0], d11=np.array([1,-1,0], d12=np.array([-1,-1,0], 
+                Es=1, Ep=1, 
                  Ed=1, sssig=-1.40, spsig=1.84, ppsig=3.24, pppi=-0.81, sdsig=1, pdsig=1, #sssig to pppi from Harrison and general, d from Titanium solid state table
                  pdpi=1, ddsig=-11.04, ddpi=1, dddel=1 ):
 
@@ -29,6 +33,15 @@ class Hconstruct:
         self.d1 = (self.a/2)*d1
         self.d2 = (self.a/2)*d2
         self.d3 = (self.a/2)*d3
+        self.d4 = (self.a/2)*d4
+        self.d5 = (self.a/2)*d5
+        self.d6 = (self.a/2)*d6
+        self.d7 = (self.a/2)*d7
+        self.d8 = (self.a/2)*d8
+        self.d9 = (self.a/2)*d9
+        self.d10 = (self.a/2)*d10
+        self.d11 = (self.a/2)*d11
+        self.d12 = (self.a/2)*d12
         #self.d4 = (self.a/np.sqrt(2))*d4
         self.Es = Es
         self.Ep = Ep
@@ -57,7 +70,16 @@ class Hconstruct:
         #dot products of k vectors with distance vectors of unit cell 
         kd1 = np.dot(kv, self.d1) 
         kd2 = np.dot(kv, self.d2) 
-        kd3 = np.dot(kv, self.d3) 
+        kd3 = np.dot(kv, self.d3)
+        kd4= np.dot(kv, self.d4) 
+        kd5 = np.dot(kv, self.d5) 
+        kd6 = np.dot(kv, self.d6) 
+        kd7 = np.dot(kv, self.d7) 
+        kd8 = np.dot(kv, self.d8) 
+        kd9 = np.dot(kv, self.d9) 
+        kd10 = np.dot(kv, self.d10) 
+        kd11 = np.dot(kv, self.d11) 
+        kd12 = np.dot(kv, self.d12) 
         #kd4 = np.dot(kv, self.d4) 
         
         
@@ -65,6 +87,15 @@ class Hconstruct:
         b1 = np.exp(complex(0,kd1)) #phase terms
         b2 = np.exp(complex(0,kd2)) 
         b3 = np.exp(complex(0,kd3)) 
+        b4 = np.exp(complex(0,kd4)) #phase terms
+        b5 = np.exp(complex(0,kd5)) 
+        b6 = np.exp(complex(0,kd6)) 
+        b7 = np.exp(complex(0,kd7)) #phase terms
+        b8 = np.exp(complex(0,kd8)) 
+        b9 = np.exp(complex(0,kd9)) 
+        b10 = np.exp(complex(0,kd10)) #phase terms
+        b11 = np.exp(complex(0,kd11)) 
+        b12 = np.exp(complex(0,kd12)) 
         #b4 = np.exp(complex(0,kd4)) 
         
         c1 = np.exp(-complex(0,kd1)) # conjugate phase terms
@@ -72,14 +103,14 @@ class Hconstruct:
         c3 = np.exp(-complex(0,kd3)) 
         #c4 = np.exp(complex(0,kd4))
         
-        self.g0 = b1 + b2 + b3 #+ #b4 #Actual phase factors
-        self.gxx = 0*b1 + b2 + b3 #- b4
-        self.gzz = b1 + b2 + 0*b3 #- b4
-        self.gyy = b1 + 0*b2 + b3 #+ b4
+        self.g0 = b1 + b2 + b3 + b4 + b5 + b6 + b7 + b8 + b9 + b10 + b11 + b12   #+ #b4 #Actual phase factors
+        self.gxx = 0*b1 + b2 + b3 + 0*b4 + 0*b5 + 0*b6 + b7 + b8 + b9 + b10 + b11 + b12#- b4
+        self.gzz = b1 + b2 + 0*b3 + b4 + b5 + b6 + b7 + b8 + b9 + b10 + b11 + b12#- b4
+        self.gyy = b1 + 0*b2 + b3 + b4 + b5 + b6 + b7 + b8 + b9 + b10 + b11 + b12#+ b4
         
-        self.gxy = 0*b1 + 0*b2 + b3 #- b4
-        self.gxz = 0*b1 + b2 + 0*b3 #- b4
-        self.gyz = b1 + 0*b2 + 0*b3 #+ b4
+        self.gxy = 0*b1 + 0*b2 + b3 + b4 + b5 + b6 + b7 + b8 + b9 + b10 + b11 + b12#- b4
+        self.gxz = 0*b1 + b2 + 0*b3 + b4 + b5 + b6 + b7 + b8 + b9 + b10 + b11 + b12#- b4
+        self.gyz = b1 + 0*b2 + 0*b3 + b4 + b5 + b6 + b7 + b8 + b9 + b10 + b11 + b12#+ b4
         
         self.gxyc = 0*c1 + 0*c2 + c3 #- b4
         self.gxzc = 0*c1 + c2 + 0*c3 #- b4
@@ -99,6 +130,7 @@ class Hconstruct:
             const = (7.62/(1.61**2)) #From eqn V_{ll'm} = n_{ll'm}*h**2/m*d**2
             self.Es = self.sssig*const
             self.Ep = (1/2)*(self.ppsig + self.pppi)*const
+            self.Epionly = self.pppi*const
             self.Esp = -(1/np.sqrt(2))*self.spsig*const
             self.Exy = (1/2)*(self.ppsig - self.pppi)*const
             
@@ -176,8 +208,8 @@ class Hconstruct:
     
         M = np.array([
                 [self.Ep*self.gxx,  self.Exy*self.gxy,  self.Exy*self.gxz ], 
-                [self.Exy*self.gxyc,  self.Ep*self.gyy,  self.Exy*self.gyz ], 
-                [self.Exy*self.gxzc,  self.Exy*self.gyzc,  self.Ep*self.gzz ]
+                [self.Exy*self.gxy,  self.Ep*self.gyy,  self.Exy*self.gyz ], 
+                [self.Exy*self.gxz,  self.Exy*self.gyz,  self.Ep*self.gzz ]
                     ])
         #Array of Hamiltonian matrix with energy values 
         return M
@@ -220,11 +252,13 @@ class Hconstruct:
         
         #self.energies.append(M[0])
         #self.kvals.append(np.sqrt(ki[0]**2 + ki[1]**2 + ki[2]**2))
-        for i in range(150):
-            kr = ki + (i/150)*k_diff
+        loops = 150
+        for i in range(loops):
+            kr = ki + (i/loops)*k_diff
             self.phasefactors(kr )
             self.energies.append(-self.Es*self.g0)
-            self.kvals.append(np.sqrt(kr[0]**2 + kr[1]**2 + kr[2]**2) )
+            #self.kvals.append(np.sqrt(kr[0]**2 + kr[1]**2 + kr[2]**2) )
+            self.kvals.append(i/float(loops))
             
         #fig = plt.figure()
         #ax = fig.add_subplot(111)
@@ -257,7 +291,9 @@ class Hconstruct:
             self.px_energies.append(eigenvals[0])
             self.py_energies.append(eigenvals[1])
             self.pz_energies.append(eigenvals[2])
-            self.kvals.append(np.sqrt(kr[0]**2 + kr[1]**2 + kr[2]**2))
+            self.kvals.append((i/float(loops)))
+            #self.kvals.append(np.sqrt(kr[0]**2 + kr[1]**2 + kr[2]**2))
+
             
         #fig = plt.figure()
         #ax = fig.add_subplot(111)
@@ -303,7 +339,7 @@ def sband_script(con):
     
     con.band_structure_s(L, Gamma, ax4, True, 'L', 'Gamma')
     con.band_structure_s(Gamma, K, ax5, False, 'Gamma', 'K')
-    con.band_structure_s(U, X, ax6, True, 'U', 'X')
+    con.band_structure_s(U, X, ax6, False, 'U', 'X')
     ax1.set_ylabel('E (eV)')
     ax3.set_xlabel('¦K¦')
     #xticklabels = ax1.get_xticklabels() + ax2.get_xticklabels() 
@@ -341,7 +377,7 @@ def pband_script(con):
     con.band_structure_p(W, L, ax3, False, 'W', 'L')
     con.band_structure_p(L, Gamma, ax4, True, 'L', 'Gamma')
     con.band_structure_p(Gamma, K, ax5, False, 'Gamma', 'K')
-    con.band_structure_p(U, X, ax6, True, 'U', 'X')
+    con.band_structure_p(U, X, ax6, False, 'U', 'X')
     ax3.set_xlabel('¦K¦')
     ax1.set_ylabel('E (eV)')
     plt.suptitle('p-bands:fcc')
@@ -349,7 +385,7 @@ def pband_script(con):
     
 
 con = Hconstruct() 
-pband_script(con) 
+sband_script(con) 
 
 #con.phasefactors()
 #H = con.Hamiltonian()

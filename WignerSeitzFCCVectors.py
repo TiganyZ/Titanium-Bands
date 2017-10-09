@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 """
+Created on Mon Oct  9 10:21:55 2017
+
+@author: tigan_5ytncvu
+"""
+
+# -*- coding: utf-8 -*-
+"""
 Created on Thu Sep 28 15:59:04 2017
 
 @author: tigan_5ytncvu
@@ -19,7 +26,7 @@ from matplotlib import pyplot as plt
 
 class Hconstruct:
     
-    def __init__(self, k=np.array([0,0,0]), H = np.ones(5), a = 1.,#1.61, #a is in Angstrom
+    def __init__(self, k=np.array([0,0,0]), a = 1.,#1.61, #a is in Angstrom
                  d1=np.array([0,1,1]), d2=np.array([1,0,1]), 
                  d3=np.array([1,1,0]), d4=np.array([0,-1,1]),
                  d5=np.array([0,1,-1]), d6=np.array([0,-1,-1]),
@@ -45,11 +52,13 @@ class Hconstruct:
         
         self.darr = np.asarray([self.d1,self.d2,self.d3,self.d4,self.d5,self.d6,
                            self.d7,self.d8,self.d9,self.d10, self.d11, self.d12])
-    
-        self.ll = self.darr[:, :1]*self.darr[:, :1]
-        self.lm = self.darr[:, 1:2]*self.darr[:, :1]
-        self.ln = self.darr[:, 2:3]*self.darr[:, :1]
-        self.mn = self.darr[:, 2:3]*self.darr[:, 1:2]
+        self.l = self.darr[:, :1].astype(np.complex_)
+        self.ll = (self.darr[:, :1]*self.darr[:, :1]).astype(np.complex_)
+        self.mm = (self.darr[:, 1:2]*self.darr[:, 1:2]).astype(np.complex_)
+        self.nn = (self.darr[:, 2:3]*self.darr[:, 2:3]).astype(np.complex_)
+        self.lm = (self.darr[:, 1:2]*self.darr[:, :1]).astype(np.complex_)
+        self.ln = (self.darr[:, 2:3]*self.darr[:, :1]).astype(np.complex_)
+        self.mn = (self.darr[:, 2:3]*self.darr[:, 1:2]).astype(np.complex_)
         #self.d4 = (self.a/np.sqrt(2))*d4
         self.Es = Es
         self.Ep = Ep
@@ -64,7 +73,6 @@ class Hconstruct:
         self.ddsig = ddsig
         self.ddpi = ddpi
         self.dddel = dddel
-        self.H = H
         self.k = k
         self.energies = []
         self.px_energies = []
@@ -72,20 +80,7 @@ class Hconstruct:
         self.pz_energies = []
         self.kvals = []
         
-    def cosines(self, dv):
-        
-        mag = np.linalg.norm(dv)
-        l = dv[0]/mag
-        m = dv[1]/mag
-        n = dv[1]/mag
-        arr = np.ones((1,12))
-        ll = self.darr[:, :1]*self.darr[:, :1]
-        lm = self.darr[:, 1:2]*self.darr[:, :1]
-        ln = self.darr[:, 2:3]*self.darr[:, :1]
-        mn = self.darr[:, 2:3]*self.darr[:, 1:2]
-        
-            
-        return l,m,n
+#
     
     
         
@@ -106,92 +101,50 @@ class Hconstruct:
         kd11 = np.dot(kv, self.d11) 
         kd12 = np.dot(kv, self.d12) 
         
+        gxypm = np.array([1, -1, 1, -1, 1, -1, 1, -1, 1, 1, -1, 1 ],dtype=np.complex_)
+        gxzpm = np.array([1, 1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1 ],dtype=np.complex_)
+        gyzpm = np.array([1, 1, -1, -1, -1, 1, 1, -1, -1, -1, 1, 1 ],dtype=np.complex_)
         
-        #kd4 = np.dot(kv, self.d4) 
         
         
         #Phase Factors for the Bloch Sum 
-        b1 = np.exp(complex(0,kd1)) #phase terms
-        b2 = np.exp(complex(0,kd2)) 
-        b3 = np.exp(complex(0,kd3)) 
-        b4 = np.exp(complex(0,kd4)) #phase terms
-        b5 = np.exp(complex(0,kd5)) 
-        b6 = np.exp(complex(0,kd6)) 
-        b7 = np.exp(complex(0,kd7)) #phase terms
-        b8 = np.exp(complex(0,kd8)) 
-        b9 = np.exp(complex(0,kd9)) 
-        b10 = np.exp(complex(0,kd10)) #phase terms
-        b11 = np.exp(complex(0,kd11)) 
-        b12 = np.exp(complex(0,kd12)) 
+        self.g0_arr=np.array([np.exp(complex(0,kd1)),  #phase terms
+                         np.exp(complex(0,kd2)), 
+                         np.exp(complex(0,kd3)), 
+                         np.exp(complex(0,kd4)), 
+                         np.exp(complex(0,kd5)), 
+                         np.exp(complex(0,kd6)), 
+                         np.exp(complex(0,kd7)), 
+                         np.exp(complex(0,kd8)), 
+                         np.exp(complex(0,kd9)), 
+                         np.exp(complex(0,kd10)), 
+                         np.exp(complex(0,kd11)), 
+                         np.exp(complex(0,kd12))
+                         ],dtype=np.complex_)
+    
+        self.gxy_arr=(self.g0_arr*gxypm)
+        self.gxz_arr=(self.g0_arr*gxzpm)
+        self.gyz_arr=(self.g0_arr*gyzpm)
         
-        self.b1 = np.exp(complex(0,kd1)) #phase terms
-        self.b2 = np.exp(complex(0,kd2)) 
-        self.b3 = np.exp(complex(0,kd3)) 
-        self.b4 = np.exp(complex(0,kd4)) #phase terms
-        self.b5 = np.exp(complex(0,kd5)) 
-        self.b6 = np.exp(complex(0,kd6)) 
-        self.b7 = np.exp(complex(0,kd7)) #phase terms
-        self.b8 = np.exp(complex(0,kd8)) 
-        self.b9 = np.exp(complex(0,kd9)) 
-        self.b10 = np.exp(complex(0,kd10)) #phase terms
-        self.b11 = np.exp(complex(0,kd11)) 
-        self.b12 = np.exp(complex(0,kd12)) 
-        #b4 = np.exp(complex(0,kd4)) 
-        
-        self.c1 = np.exp(-complex(0,kd1)) #phase terms
-        self.c2 = np.exp(-complex(0,kd2)) 
-        self.c3 = np.exp(-complex(0,kd3)) 
-        self.c4 = np.exp(-complex(0,kd4)) #phase terms
-        self.c5 = np.exp(-complex(0,kd5)) 
-        self.c6 = np.exp(-complex(0,kd6)) 
-        self.c7 = np.exp(-complex(0,kd7)) #phase terms
-        self.c8 = np.exp(-complex(0,kd8)) 
-        self.c9 = np.exp(-complex(0,kd9)) 
-        self.c10 = np.exp(-complex(0,kd10)) #phase terms
-        self.c11 = np.exp(-complex(0,kd11)) 
-        self.c12 = np.exp(-complex(0,kd12)) 
-        
-        c1 = np.exp(-complex(0,kd1)) #phase terms
-        c2 = np.exp(-complex(0,kd2)) 
-        c3 = np.exp(-complex(0,kd3)) 
-        c4 = np.exp(-complex(0,kd4)) #phase terms
-        c5 = np.exp(-complex(0,kd5)) 
-        c6 = np.exp(-complex(0,kd6)) 
-        c7 = np.exp(-complex(0,kd7)) #phase terms
-        c8 = np.exp(-complex(0,kd8)) 
-        c9 = np.exp(-complex(0,kd9)) 
-        c10 = np.exp(-complex(0,kd10)) #phase terms
-        c11 = np.exp(-complex(0,kd11)) 
-        c12 = np.exp(-complex(0,kd12))
-        #c4 = np.exp(complex(0,kd4))
-        
-        self.g0 = b1 + b2 + b3 + b4 + b5 + b6 + b7 + b8 + b9 + b10 + b11 + b12   #+ #b4 #Actual phase factors
-        self.gxx = 0*b1 + b2 + b3 + 0*b4 + 0*b5 + 0*b6 + b7 + b8 + b9 + b10 + b11 + b12#- b4
-        self.gzz = b1 + b2 + 0*b3 + b4 + b5 + b6 + b7 + b8 + b9 + 0*b10 + 0*b11 + 0*b12#- b4
-        self.gyy = b1 + 0*b2 + b3 + b4 + b5 + b6 + 0*b7 + 0*b8 + 0*b9 + b10 + b11 + b12#+ b4
-        
-        self.gxy = b3 + b10 - b11 + b12
-        self.gxz = b2 + b7 - b8 + b9 
-        self.gyz = b1 - b4 - b5 + b6 
-        
-        self.gxy2 = b1 - b2 + b3 - b4 + b5 - b6 + b7 - b8 + b9 + b10 - b11 + b12 
-        self.gxz2 = b1 + b2 - b3 + b4 - b5 - b6 + b7 - b8 + b9 + b10 - b11 + b12 
-        self.gyz2 = b1 + b2 - b3 - b4 - b5 + b6 + b7 - b8 - b9 - b10 + b11 + b12 
-        
-        self.gxy2c = c1 - c2 + c3 - c4 + c5 - c6 + c7 - c8 + c9 + c10 - c11 + c12 
-        self.gxz2c = c1 + c2 - c3 + c4 - c5 - c6 + c7 - c8 + c9 + c10 - c11 + c12 
-        self.gyz2c = c1 + c2 - c3 - c4 - c5 + c6 + c7 - c8 - c9 - c10 + c11 + c12 
-        
-        self.gxyc = c3 + c10 - c11 + c12
-        self.gxzc = c2 + c7 - c8 + c9 
-        self.gyzc = c1 - c4 - c5 + c6 
-        
-        self.g0c = c1 + c2 + c3 #+ c4 #Actual phase factors
-        self.gxxc = 0*c1 + c2 + c3 #- c4
-        self.gzzc = c1 + c2 + 0*c3 #- c4
-        self.gyyc = c1 + 0*c2 + c3 #+ c4
-        
-        #return g0, g1, g2, g3
+        self.g0_arr = (self.g0_arr)
+    
+
+    
+        self.g0c_arr=np.array([[ np.exp(-complex(0,kd1))],  #phase terms
+                         [np.exp(-complex(0,kd2))], 
+                         [np.exp(-complex(0,kd3))], 
+                         [np.exp(-complex(0,kd4))], 
+                         [np.exp(-complex(0,kd5))], 
+                         [np.exp(-complex(0,kd6))], 
+                         [np.exp(-complex(0,kd7))], 
+                         [np.exp(-complex(0,kd8))], 
+                         [np.exp(-complex(0,kd9))], 
+                         [np.exp(-complex(0,kd10))], 
+                         [np.exp(-complex(0,kd11))], 
+                         [np.exp(-complex(0,kd12))]
+                         ],dtype=np.complex_)
+  
+  
     
     def initial_energies(self, signifier):
         
@@ -199,11 +152,22 @@ class Hconstruct:
         if signifier == 'fcc':
             
             const = (7.62/(1.61**2)) #From eqn V_{ll'm} = n_{ll'm}*h**2/m*d**2
-            self.Es = self.sssig*const
-            self.Ep = (1/2)*(self.ppsig + self.pppi)*const
-            self.Epionly = self.pppi*const
-            self.Esp = -(1/np.sqrt(2))*self.spsig*const
-            self.Exy = (1/2)*(self.ppsig - self.pppi)*const
+            ones = np.ones((12,1),dtype=np.complex_)
+            
+            self.Es = self.sssig*const*ones
+            self.Epxx = (self.ll*self.ppsig + (ones - self.ll)*self.pppi)*const
+            self.Epyy = (self.mm*self.ppsig + (ones - self.mm)*self.pppi)*const
+            self.Epzz = (self.nn*self.ppsig + (ones - self.nn)*self.pppi)*const
+            
+            self.Ep
+            #self.Epionly = self.pppi*const
+            self.Espx = -self.darr[:, : 1]*self.spsig*const
+            self.Espy = -self.darr[:, 1: 2]*self.spsig*const
+            self.Espz = -self.darr[:, 2: 3]*self.spsig*const
+            
+            self.Exy = self.lm*(self.ppsig - self.pppi)*const
+            self.Exz = self.ln*(self.ppsig - self.pppi)*const
+            self.Eyz = self.mn*(self.ppsig - self.pppi)*const
             
             
         
@@ -276,13 +240,11 @@ class Hconstruct:
         self.initial_energies('fcc')
         self.phasefactors(kv)
     
-        self.Epxx = self.Ep*self.gxx + self.Epionly*(self.b1 + self.b4 + self.b5 + self.b6)
-        self.Epyy = self.Ep*self.gyy + self.Epionly*(self.b2 + self.b7 + self.b8 + self.b9)
-        self.Epzz = self.Ep*self.gzz + self.Epionly*(self.b3 + self.b10 + self.b11 + self.b12)
-        M = np.array([   #not sure what to do hereeeeeeeeeeeeeeeee?!?!?
-                [self.Epxx,  self.Exy*self.gxy,  self.Exy*self.gxz ], 
-                [self.Exy*self.gxyc,  self.Epyy,  self.Exy*self.gyz ], 
-                [self.Exy*self.gxzc,  self.Exy*self.gyzc,  self.Epzz ]
+    
+        M = np.asarray([
+                [np.dot(self.g0_arr,self.Epxx)[0],  np.dot(self.gxy_arr,self.Exy)[0],  np.dot(self.gxz_arr,self.Exz)[0] ], 
+                [np.dot(self.gxy_arr,self.Exy)[0],  np.dot(self.g0_arr,self.Epyy)[0],  np.dot(self.gyz_arr,self.Eyz)[0] ], 
+                [np.dot(self.gxz_arr,self.Exz)[0],  np.dot(self.gyz_arr,self.Eyz)[0],  np.dot(self.g0_arr,self.Epzz)[0] ]
                     ])
         #Array of Hamiltonian matrix with energy values 
         return M
@@ -329,7 +291,7 @@ class Hconstruct:
         for i in range(loops):
             kr = ki + (i/loops)*k_diff
             self.phasefactors(kr )
-            self.energies.append(-self.Es*self.g0)
+            self.energies.append(np.dot(self.g0_arr, -self.Es)[0])
             #self.kvals.append(np.sqrt(kr[0]**2 + kr[1]**2 + kr[2]**2) )
             self.kvals.append(i/float(loops))
             
@@ -463,7 +425,7 @@ def pband_script(con):
     
 
 con = Hconstruct() 
-pband_script(con) 
+sband_script(con) 
 
 #con.phasefactors()
 #H = con.Hamiltonian()

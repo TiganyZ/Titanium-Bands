@@ -34,7 +34,7 @@ class Hconstruct:
                  d7=np.array([-1,0,1]), d8=np.array([1,0,-1]), d9=np.array([-1,0,-1]), 
                 d10=np.array([-1,1,0]), d11=np.array([1,-1,0]), d12=np.array([-1,-1,0]), 
                 Es=1, Ep=1, 
-                 Ed=1, sssig=-1.39, spsig=1.84, ppsig=3.24, pppi=-0.93, sdsig=1, pdsig=1, #sssig to pppi from Harrison and general, d from Titanium solid state table
+                 Ed=1, sssig=-1.39, spsig=1.84, ppsig=4.08, pppi=-1.49, sdsig=1, pdsig=1, #sssig to pppi from Harrison and general, d from Titanium solid state table
                  pdpi=1, ddsig=-11.04, ddpi=1, dddel=1 ):
 
         self.a = a
@@ -109,7 +109,7 @@ class Hconstruct:
         gzzpm = np.array([-1, -1, -1, -1,     -1, -1, -1, -1,     1, 1, 1, 1 ])
         
         gxypm = np.array([-1, 1, -1, 1,      1, -1, 1, -1,       -1, 1, 1, -1 ])
-        gyxpm = np.array([1, -1, 1, -1,     -1, 1, -1, 1,       -1, 1, 1, -1 ])
+        gyxpm = np.array([1, -1, 1, -1,     -1, 1, -1, 1,       1, -1, -1, 1 ])
         
         gxzpm = np.array([-1, -1, 1, 1,         -1, 1, 1, -1,         1, -1, 1, -1 ])
         gzxpm = np.array([1, 1, -1, -1,         -1, 1, 1, -1,        -1, 1, -1, 1 ])
@@ -272,10 +272,10 @@ class Hconstruct:
         self.phasefactors(kv)
     
     
-        M = np.asarray([
+        M = -np.asarray([
                 [np.dot(-self.gxx_arr,self.Epxx)[0],  np.dot(self.gxy_arr,self.Exy)[0],  np.dot(self.gxz_arr,self.Exz)[0] ], 
-                [np.dot(self.gxyc_arr,self.Exy)[0],  np.dot(-self.gyy_arr,self.Epyy)[0],  np.dot(self.gyz_arr,self.Eyz)[0] ], 
-                [np.dot(self.gxzc_arr,self.Exz)[0],  np.dot(self.gyzc_arr,self.Eyz)[0],  np.dot(-self.gzz_arr,self.Epzz)[0] ]
+                [np.dot(self.gyx_arr,self.Exy)[0],  np.dot(-self.gyy_arr,self.Epyy)[0],  np.dot(self.gyz_arr,self.Eyz)[0] ], 
+                [np.dot(self.gzx_arr,self.Exz)[0],  np.dot(self.gzy_arr,self.Eyz)[0],  np.dot(-self.gzz_arr,self.Epzz)[0] ]
                     ])
         #Array of Hamiltonian matrix with energy values 
         return M
@@ -345,7 +345,7 @@ class Hconstruct:
         for i in range(loops):
             kr = ki + (i/float(loops))*k_diff
             self.phasefactors(kr )
-            self.M = (1/12.)*self.Hamiltonian_p(kr)
+            self.M = -(1/12.)*self.Hamiltonian_p(kr)
             eigenvals = self.eigenvalues(self.M)
             print(eigenvals)
             self.px_energies.append(eigenvals[0])

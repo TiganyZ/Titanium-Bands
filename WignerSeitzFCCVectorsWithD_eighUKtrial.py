@@ -119,15 +119,15 @@ class Hconstruct:
         gyypm = np.array([-1, -1, -1, -1,      1, 1, 1, 1,        -1, -1, -1, -1 ])
         gzzpm = np.array([-1, -1, -1, -1,     -1, -1, -1, -1,     1, 1, 1, 1 ])
         
-        gxypm = np.array([1, -1, 1, -1,      -1, 1, -1, 1,       1, -1, -1, 1 ])
-        gyxpm = np.array([-1, 1, -1, 1,     1, -1, 1, -1,       1, -1, -1, 1 ])
+        gxypm = np.array([1, -1, 1, -1,      1, -1, 1, -1,       1, -1, -1, 1 ])
+        gyxpm = np.array([-1, 1, -1, 1,     -1, 1, -1, 1,       1, -1, -1, 1 ])
         
-        gxzpm = np.array([1, 1, -1, -1,         1, -1, -1, 1,        -1, 1, -1, 1 ])
-        gzxpm = np.array([-1, -1, 1, 1,         1, -1, -1, 1,         1, -1, 1, -1 ])
+        gxzpm = np.array([1, 1, -1, -1,         1, -1, -1, 1,        1, -1, 1, -1 ])
+        gzxpm = np.array([-1, -1, 1, 1,         1, -1, -1, 1,         -1, 1, -1, 1 ])
         
         
-        gyzpm = np.array([1, -1, -1, 1,      1, 1, -1, -1,       -1, -1, 1, 1 ])
-        gzypm = np.array([1, -1, -1, 1,      -1, -1, 1, 1,       1, 1, -1, -1 ])
+        gyzpm = np.array([1, -1, -1, 1,      1, 1, -1, -1,       1, -1, -1, 1 ])
+        gzypm = np.array([1, -1, -1, 1,      -1, -1, 1, 1,       -1, 1, 1, -1 ])
         
         
         
@@ -448,8 +448,8 @@ class Hconstruct:
     
         M = np.asarray([
                 [np.dot(self.g0_arr,self.Epxx)[0],  np.dot(self.gxy_arr,self.Exy)[0],  np.dot(self.gxz_arr,self.Exz)[0] ], 
-                [-np.dot(self.gyx_arr,self.Exy)[0],  np.dot(self.g0_arr,self.Epyy)[0],  np.dot(self.gyz_arr,self.Eyz)[0] ], 
-                [-np.dot(self.gzx_arr,self.Exz)[0],  -np.dot(self.gzy_arr,self.Eyz)[0],  np.dot(self.g0_arr,self.Epzz)[0] ]
+                [np.dot(self.gyx_arr,self.Exy)[0],  np.dot(self.g0_arr,self.Epyy)[0],  np.dot(self.gyz_arr,self.Eyz)[0] ], 
+                [np.dot(self.gzx_arr,self.Exz)[0],  np.dot(self.gzy_arr,self.Eyz)[0],  np.dot(self.g0_arr,self.Epzz)[0] ]
                     ])
         #Array of Hamiltonian matrix with energy values 
         return M

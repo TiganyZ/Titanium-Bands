@@ -55,9 +55,9 @@ class Hconstruct:
         
         self.darr = np.asarray([self.d1,self.d4,self.d5,self.d6,self.d2,self.d7,
                            self.d8,self.d9,self.d3,self.d10, self.d11, self.d12])/np.sqrt(2)
-        self.l = self.darr[:, :1].astype(np.complex_)
-        self.m = self.darr[:, 1:2].astype(np.complex_)
-        self.n = self.darr[:, 2:3].astype(np.complex_)
+        self.l = np.abs(self.darr[:, :1].astype(np.complex_))
+        self.m = np.abs(self.darr[:, 1:2].astype(np.complex_))
+        self.n = np.abs(self.darr[:, 2:3].astype(np.complex_))
         
         self.ll = self.l*self.l
         self.mm = self.m*self.m
@@ -388,7 +388,7 @@ class Hconstruct:
         self.phasefactors(kv)
     
     
-        M = -np.asarray([
+        M = -12.*np.asarray([
                 [np.dot(-self.g0_arr,self.Edxy_xy)[0],  np.dot(self.gdxy_yz_arr,self.Edxy_yz)[0], np.dot(self.gdxy_zx_arr,self.Edxy_zx)[0],
                          np.dot(self.gdxy_xxyy_arr,self.Edxy_xxyy)[0],  np.dot(self.gdxy_zr_arr,self.Edxy_zr)[0]  ], 
                 
@@ -431,7 +431,7 @@ class Hconstruct:
         self.initial_energies('fcc')
         self.phasefactors(kv)
     
-        M = np.asarray([[np.dot(self.g0_arr, self.Es)[0], np.dot(self.gspx_arr,self.Espx)[0],  np.dot(self.gspy_arr,self.Espy)[0],  np.dot(self.gspz_arr,self.Espz)[0] ]
+        M = 12.*np.asarray([[np.dot(self.g0_arr, self.Es)[0], np.dot(self.gspx_arr,self.Espx)[0],  np.dot(self.gspy_arr,self.Espy)[0],  np.dot(self.gspz_arr,self.Espz)[0] ]
                 [np.dot(self.gspx_arr,self.Espx)[0], np.dot(self.g0_arr,self.Epxx)[0],  np.dot(self.gxy_arr,self.Exy)[0],  np.dot(self.gxz_arr,self.Exz)[0] ], 
                 [np.dot(self.gspy_arr,self.Espy)[0], np.dot(self.gyx_arr,self.Exy)[0],  np.dot(self.g0_arr,self.Epyy)[0],  np.dot(self.gyz_arr,self.Eyz)[0] ], 
                 [np.dot(self.gspz_arr,self.Espz)[0], np.dot(self.gzx_arr,self.Exz)[0],  np.dot(self.gzy_arr,self.Eyz)[0],  np.dot(self.g0_arr,self.Epzz)[0] ]
@@ -446,7 +446,7 @@ class Hconstruct:
         self.phasefactors(kv)
     
     
-        M = np.asarray([
+        M = 12.*np.asarray([
                 [np.dot(self.g0_arr,self.Epxx)[0],  np.dot(self.gxy_arr,self.Exy)[0],  np.dot(self.gxz_arr,self.Exz)[0] ], 
                 [np.dot(self.gyx_arr,self.Exy)[0],  np.dot(self.g0_arr,self.Epyy)[0],  np.dot(self.gyz_arr,self.Eyz)[0] ], 
                 [np.dot(self.gzx_arr,self.Exz)[0],  np.dot(self.gzy_arr,self.Eyz)[0],  np.dot(self.g0_arr,self.Epzz)[0] ]
@@ -684,7 +684,7 @@ def dband_script(con):
     
 
 con = Hconstruct() 
-pband_script(con) 
+dband_script(con) 
 
 
 

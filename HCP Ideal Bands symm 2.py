@@ -212,21 +212,21 @@ class Hconstruct:
         
         
         gxy_xy2 = np.array([1, 1, 1,      1, 1, 1 ])
-        gxy_yz2 = np.array([1, 1, 1,      1, 1, 1 ])
-        gxy_zx2 = np.array([1, 1, 1,      1, 1, 1 ])
+        gxy_yz2 = np.array([-1, 1, -1,      1, -1, 1 ])
+        gxy_zx2 = np.array([-1, -1, 1,      1, 1, -1 ])
         
-        gxy_xxyy2 =np.array([1, 1, 1,      1, 1, 1 ])
+        gxy_xxyy2 =np.array([1, -1, 1,      1, -1, 1 ])
         
-        gyz_zx2 = np.array([1, 1, 1,      1, 1, 1 ])
-        gyz_xxyy2 = np.array([1, 1, 1,      1, 1, 1 ])
-        gzx_xxyy2 = np.array([1, 1, 1,      1, 1, 1 ])
+        gyz_zx2 = np.array([-1, 1, 1,      -1, 1, 1 ])
+        gyz_xxyy2 = np.array([1, 1, -1,      -1, -1, 1 ])
+        gzx_xxyy2 = np.array([1, -1, 1,      -1, 1, 1 ])
         
         gxxyy_xxyy2 = np.array([1, 1, 1,      1, 1, 1 ])
         gzr_zr2 = np.array([1, 1, 1,      1, 1, 1 ])
         
-        gzx_zr2 = np.array([1, 1, 1,      1, 1, 1 ])
-        gxy_zr2 = np.array([1, 1, 1,      1, 1, 1 ])
-        gyz_zr2 = np.array([1, 1, 1,      1, 1, 1 ])
+        gzx_zr2 = np.array([-1, 1, 1,      1, -1, 1 ])
+        gxy_zr2 = np.array([-1, 1, 1,      -1, 1, 1 ])
+        gyz_zr2 = np.array([-1, -1, 1,      1, 1, -1 ])
         gxxyy_zr2 = np.array([1, 1, 1,      1, 1, 1 ])
         
         #Phase Factors for the Bloch Sum 

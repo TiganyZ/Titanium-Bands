@@ -114,30 +114,20 @@ class Hconstruct:
         kd12 = np.dot(kv, self.d12) 
         
         
-        ones = np.array([1, 1, 1, 1,         1, 1, 1, 1,     1, 1, 1, 1 ])
+        
         gxxpm = np.array([1, 1, 1, 1,         -1, -1, -1, -1,     -1, -1, -1, -1 ])
         gyypm = np.array([-1, -1, -1, -1,      1, 1, 1, 1,        -1, -1, -1, -1 ])
         gzzpm = np.array([-1, -1, -1, -1,     -1, -1, -1, -1,     1, 1, 1, 1 ])
         
-        self.gxypm = np.array([1, -1, 1, -1,      -1, 1, -1, 1,       1, -1, -1, 1 ])
-        self.gyxpm = np.array([-1, 1, -1, 1,     1, -1, 1, -1,       1, -1, -1, 1 ])
+        gxypm = np.array([1, -1, 1, -1,      1, -1, 1, -1,       1, -1, -1, 1 ])
+        gyxpm = np.array([-1, 1, -1, 1,     -1, 1, -1, 1,       1, -1, -1, 1 ])
         
-        self.gxzpm = np.array([1, 1, -1, -1,         1, -1, -1, 1,        -1, 1, -1, 1 ])
-        self.gzxpm = np.array([-1, -1, 1, 1,         1, -1, -1, 1,         1, -1, 1, -1 ])
-        
-        
-        self.gyzpm = np.array([1, -1, -1, 1,      1, 1, -1, -1,       -1, -1, 1, 1 ])
-        self.gzypm = np.array([1, -1, -1, 1,      -1, -1, 1, 1,       1, 1, -1, -1 ])
-        
-        gxypm = np.array([1, -1, 1, -1,      -1, 1, -1, 1,       1, -1, -1, 1 ])
-        gyxpm = np.array([-1, 1, -1, 1,     1, -1, 1, -1,       1, -1, -1, 1 ])
-        
-        gxzpm = np.array([1, 1, -1, -1,         1, -1, -1, 1,        -1, 1, -1, 1 ])
-        gzxpm = np.array([-1, -1, 1, 1,         1, -1, -1, 1,         1, -1, 1, -1 ])
+        gxzpm = np.array([1, 1, -1, -1,         1, -1, -1, 1,        1, -1, 1, -1 ])
+        gzxpm = np.array([-1, -1, 1, 1,         1, -1, -1, 1,         -1, 1, -1, 1 ])
         
         
-        gyzpm = np.array([1, -1, -1, 1,      1, 1, -1, -1,       -1, -1, 1, 1 ])
-        gzypm = np.array([1, -1, -1, 1,      -1, -1, 1, 1,       1, 1, -1, -1 ])
+        gyzpm = np.array([1, -1, -1, 1,      1, 1, -1, -1,       1, -1, -1, 1 ])
+        gzypm = np.array([1, -1, -1, 1,      -1, -1, 1, 1,       -1, 1, 1, -1 ])
         
         
         
@@ -156,14 +146,14 @@ class Hconstruct:
         gxy_xxyy = np.array([1, 1, 1, 1,         1, 1, 1, 1,     -1, 1, 1, -1 ])
         
         gyz_zx = np.array([1, -1, -1, 1,         1, -1, -1, 1,     -1, 1, 1, -1 ])
-        gyz_xxyy = np.array([-1, 1, 1, -1,         1, 1, 1, 1,     1, 1, 1, 1 ])
+        gyz_xxyy = np.array([-1, -1, 1, 1,         1, 1, -1, -1,     1, 1, 1, 1 ])
         gzx_xxyy = np.array([-1, -1, -1, -1,         1, -1, -1, 1,     -1, -1, -1, -1 ])
         
         gxxyy_xxyy = np.array([1, 1, 1, 1,         1, 1, 1, 1,     -1, -1, -1, -1 ])
         gzr_zr = np.array([1, 1, 1, 1,         1, 1, 1, 1,     -1, -1, -1, -1 ])
         
         gzx_zr = np.array([1, 1, 1, 1,         1, -1, -1, 1,     -1, -1, -1, -1 ])
-        gxy_zr = np.array([1, 1, 1, 1,         1, 1, 1, 1,     -1, 1, 1, -1 ])
+        gxy_zr = np.array([-1, -1, -1, -1,         -1, -1, -1, -1,     -1, 1, 1, -1 ])
         gyz_zr = np.array([1, -1, 1, -1,         1, 1, 1, 1,     -1, -1, -1, -1 ])
         gxxyy_zr = np.array([-1, -1, -1, -1,         1, 1, 1, 1,     -1, -1, -1, -1 ])
         
@@ -197,21 +187,13 @@ class Hconstruct:
                          ])
     
         self.gxy_arr=self.g0_arr*gxypm
-        self.gxys = np.sum(self.gxy_arr)
         self.gyx_arr=self.g0_arr*gyxpm
-        self.gyxs = np.sum(self.gyx_arr)
         
         self.gxz_arr=self.g0_arr*gxzpm
-        self.gxzs = np.sum(self.gxz_arr)
         self.gzx_arr=self.g0_arr*gzxpm
-        self.gzxs = np.sum(self.gzx_arr)
         
         self.gyz_arr=self.g0_arr*gyzpm
-        self.gyzs = np.sum(self.gyz_arr)
         self.gzy_arr=self.g0_arr*gzypm
-        self.gzys = np.sum(self.gzy_arr)
-        
-        self.g0s = np.sum(self.g0_arr)
         
         
         self.gxyc_arr=self.g0c_arr*gxypm
@@ -317,7 +299,7 @@ class Hconstruct:
         m = self.m 
         n = self.n 
         ll = self.ll
-        mm = self. mm
+        mm = self.mm
         nn = self.nn 
         
         
@@ -330,8 +312,7 @@ class Hconstruct:
             if band ==  'p':
             
                 const = (7.62/(1.61**2)) #From eqn V_{ll'm} = n_{ll'm}*h**2/m*d**2
-                onest = np.ones((1,12))
-                #ones = np.ones((12,1))
+                ones = np.ones((12,1))
                 
                 self.Es = self.sssig*ones
          
@@ -341,50 +322,34 @@ class Hconstruct:
                 
                 
                 self.Epxx = (self.ll*self.ppsig + (ones - self.ll)*self.pppi)
-                self.Epxxs = np.dot(self.Epxx.T[0], onest[0])
-                self.Exx = np.sum(self.Epxxs)
-                
                 self.Epyy = (self.mm*self.ppsig + (ones - self.mm)*self.pppi)
-                self.Epyys = np.dot(self.Epyy.T[0], onest[0])
-                self.Eyy = np.sum(self.Epyys)
-                
                 self.Epzz = (self.nn*self.ppsig + (ones - self.nn)*self.pppi)
-                self.Epzzs = np.dot(self.Epzz.T[0], onest[0])
-                self.Ezz = np.sum(self.Epzzs)
                 
-                self.Epxy = self.l*self.m*(self.ppsig - self.pppi)
-                self.Exys = np.dot(self.Epxy.T[0], onest[0])
-                self.Exy = np.sum(self.Exys)
-                
-                self.Epxz = self.l*self.n*(self.ppsig - self.pppi)
-                self.Exzs = np.dot(self.Epxz.T[0], onest[0])
-                self.Exz = np.sum(self.Exzs)
-                
-                self.Epyz = self.m*self.n*(self.ppsig - self.pppi)
-                self.Eyzs = np.dot(self.Epyz.T[0], onest[0])
-                self.Eyz = np.sum(self.Eyzs)
+                self.Exy = self.l*self.m*(self.ppsig - self.pppi)
+                self.Exz = self.l*self.n*(self.ppsig - self.pppi)
+                self.Eyz = self.m*self.n*(self.ppsig - self.pppi)
                 
             if band == 'd':
                 
-                self.Edxy_xy = ( 3*ll*mm*self.ddsig + (ll + mm -4*ll*mm)*self.ddpi + (nn + ll*mm)*self.dddelta )
-                self.Edyz_yz = (3*mm*nn*self.ddsig + (mm + nn -4*mm*nn)*self.ddpi + (ll + mm*nn)*self.dddelta)
-                self.Edzx_zx = (3*nn*ll*self.ddsig + (nn + ll -4*nn*ll)*self.ddpi + (mm + nn*ll)*self.dddelta)
+                self.Edxy_xy = ( 3*ll*mm*self.ddsig     +   (ll + mm -4*ll*mm)*self.ddpi    +    (nn + ll*mm)*self.dddelta )
+                self.Edyz_yz = (3*mm*nn*self.ddsig      +   (mm + nn -4*mm*nn)*self.ddpi    +    (ll + mm*nn)*self.dddelta)
+                self.Edzx_zx = (3*nn*ll*self.ddsig      +   (nn + ll -4*nn*ll)*self.ddpi    +    (mm + nn*ll)*self.dddelta)
                 
-                self.Edxy_yz = (3*l*mm*n*self.ddsig + l*n*(ones -  4*mm )*self.ddpi + l*n*(mm - ones)*self.dddelta)
-                self.Edxy_zx = (3*ll*m*n*self.ddsig + m*n*(ones -  4*ll )*self.ddpi + m*n*(ll - ones)*self.dddelta)
-                self.Edyz_zx = (3*nn*m*l*self.ddsig + m*n*(ones -  4*nn )*self.ddpi + m*l*(nn - ones)*self.dddelta)
+                self.Edxy_yz = (3*l*mm*n*self.ddsig     +   l*n*(ones -  4*mm )*self.ddpi   +    l*n*(mm - ones)*self.dddelta)
+                self.Edxy_zx = (3*ll*m*n*self.ddsig     +   m*n*(ones -  4*ll )*self.ddpi   +    m*n*(ll - ones)*self.dddelta)
+                self.Edyz_zx = (3*nn*m*l*self.ddsig     +   m*l*(ones -  4*nn )*self.ddpi   +    m*l*(nn - ones)*self.dddelta)
                 
-                self.Edxy_xxyy = ((3./2)*l*m*(ll - mm)*self.ddsig - 2*l*m*(mm -  ll )*self.ddpi + 0.5*l*m*(ll - mm)*self.dddelta)
-                self.Edyz_xxyy = ((3./2)*m*n*(ll - mm)*self.ddsig - m*n*(ones + 2*(ll -  mm) )*self.ddpi + m*n*(ones + 0.5*(ll - mm))*self.dddelta)
-                self.Edzx_xxyy = ((3./2)*n*l*(ll - mm)*self.ddsig + n*l*(ones - 2*(ll -  mm) )*self.ddpi + n*l*(ones - 0.5*(ll - mm))*self.dddelta)
+                self.Edxy_xxyy = ((3./2)*l*m*(ll - mm)*self.ddsig       +       2*l*m*(mm -  ll )*self.ddpi                 +    0.5*l*m*(ll - mm)*self.dddelta)
+                self.Edyz_xxyy = ((3./2)*m*n*(ll - mm)*self.ddsig       -       m*n*(ones + 2*(ll -  mm) )*self.ddpi        +    m*n*(ones + 0.5*(ll - mm))*self.dddelta)
+                self.Edzx_xxyy = ((3./2)*n*l*(ll - mm)*self.ddsig       +       n*l*(ones - 2*(ll -  mm) )*self.ddpi        -    n*l*(ones - 0.5*(ll - mm))*self.dddelta)
                 
-                self.Edxy_zr = (np.sqrt(3)*l*m*(nn - 0.5*(ll + mm))*self.ddsig - np.sqrt(3)*2*l*m*nn*self.ddpi + 0.5*np.sqrt(3)*l*m*(ones + nn)*self.dddelta)
-                self.Edyz_zr = (np.sqrt(3)*m*n*(nn - 0.5*(ll + mm))*self.ddsig + np.sqrt(3)*m*n*(ll + mm - nn)*self.ddpi - 0.5*np.sqrt(3)*m*n*(ll + nn)*self.dddelta)
-                self.Edzx_zr = (np.sqrt(3)*l*n*(nn - 0.5*(ll + mm))*self.ddsig + np.sqrt(3)*l*n*(ll + mm - nn)*self.ddpi - 0.5*np.sqrt(3)*l*n*(ll + nn)*self.dddelta)
+                self.Edxy_zr = (np.sqrt(3)*l*m*(nn - 0.5*(ll + mm))*self.ddsig      -   np.sqrt(3)*2*l*m*nn*self.ddpi               +   0.5*np.sqrt(3)*l*m*(ones + nn)*self.dddelta)
+                self.Edyz_zr = (np.sqrt(3)*m*n*(nn - 0.5*(ll + mm))*self.ddsig      +   np.sqrt(3)*m*n*(ll + mm - nn)*self.ddpi     -   0.5*np.sqrt(3)*m*n*(ll + nn)*self.dddelta)
+                self.Edzx_zr = (np.sqrt(3)*l*n*(nn - 0.5*(ll + mm))*self.ddsig      +   np.sqrt(3)*l*n*(ll + mm - nn)*self.ddpi     -   0.5*np.sqrt(3)*l*n*(ll + nn)*self.dddelta)
                 
-                self.Edxxyy_xxyy = (0.75*((ll - mm)**2)*self.ddsig - (ll + mm - (ll -  mm)**2 )*self.ddpi + (nn + 0.25*(ll -  mm)**2)*self.dddelta)
-                self.Edxxyy_zr = ((3./2)*np.sqrt(3)*(ll - mm)*(nn - 0.5*(ll + mm))*self.ddsig - np.sqrt(3)*nn*(mm - ll)*self.ddpi + 0.25*np.sqrt(3)*(ones + nn)*(ll -  mm)*self.dddelta)
-                self.Edzr_zr = ((nn - 0.5*(ll + mm))*self.ddsig + 3*nn*(mm + ll)*self.ddpi + 0.75*(ll +  mm)*(ll +  mm)*self.dddelta)
+                self.Edxxyy_xxyy = (0.75*((ll - mm)**2)*self.ddsig      +     (ll + mm - (ll -  mm)**2 )*self.ddpi    +    (nn + 0.25*(ll -  mm)**2)*self.dddelta)
+                self.Edxxyy_zr = (0.5*np.sqrt(3)*(ll - mm)*(nn - 0.5*(ll + mm))*self.ddsig     +   np.sqrt(3)*nn*(mm - ll)*self.ddpi     +   0.25*np.sqrt(3)*(ones + nn)*(ll -  mm)*self.dddelta)
+                self.Edzr_zr = (((nn - 0.5*(ll + mm))**2)*self.ddsig       +      3*nn*(mm + ll)*self.ddpi      +       0.75*((ll +  mm)**2)*self.dddelta)
                 
                 
             
@@ -423,21 +388,21 @@ class Hconstruct:
         self.phasefactors(kv)
     
     
-        M = np.asarray([
-                [np.dot(self.g0_arr,self.Edxy_xy)[0],  np.dot(self.gdxy_yz_arr,self.Edxy_yz)[0], np.dot(self.gdxy_zx_arr,self.Edxy_zx)[0],
+        M = -12.*np.asarray([
+                [np.dot(-self.g0_arr,self.Edxy_xy)[0],  np.dot(self.gdxy_yz_arr,self.Edxy_yz)[0], np.dot(self.gdxy_zx_arr,self.Edxy_zx)[0],
                          np.dot(self.gdxy_xxyy_arr,self.Edxy_xxyy)[0],  np.dot(self.gdxy_zr_arr,self.Edxy_zr)[0]  ], 
                 
-                [np.dot(self.gdyz_xy_arrc,self.Edxy_yz)[0],  np.dot(self.g0_arr,self.Edyz_yz)[0], np.dot(self.gdyz_zx_arr,self.Edyz_zx)[0],
+                [np.dot(self.gdyz_xy_arr,self.Edxy_yz)[0],  np.dot(-self.g0_arr,self.Edyz_yz)[0], np.dot(self.gdyz_zx_arr,self.Edyz_zx)[0],
                          np.dot(self.gdyz_xxyy_arr,self.Edyz_xxyy)[0],  np.dot(self.gdyz_zr_arr,self.Edyz_zr)[0] ], 
                 
-                [np.dot(self.gdzx_xy_arrc,self.Edxy_zx)[0],  np.dot(self.gdzx_yz_arrc,self.Edyz_zx)[0], np.dot(self.g0_arr,self.Edzx_zx)[0],
+                [np.dot(self.gdzx_xy_arr,self.Edxy_zx)[0],  np.dot(self.gdzx_yz_arr,self.Edyz_zx)[0], np.dot(-self.g0_arr,self.Edzx_zx)[0],
                          np.dot(self.gdzx_xxyy_arr,self.Edzx_xxyy)[0],  np.dot(self.gdzx_zr_arr,self.Edzx_zr)[0] ], 
                            
-                [np.dot(self.gdxxyy_xy_arrc,self.Edxy_xxyy)[0], np.dot(self.gdxxyy_yz_arrc,self.Edyz_xxyy)[0], np.dot(self.gdxxyy_zx_arrc,self.Edzx_xxyy)[0],
-                         np.dot(self.g0_arr,self.Edxxyy_xxyy)[0],  np.dot(self.gdxxyy_zr_arr,self.Edxxyy_zr)[0] ], 
+                [np.dot(self.gdxxyy_xy_arr,self.Edxy_xxyy)[0], np.dot(self.gdxxyy_yz_arr,self.Edyz_xxyy)[0], np.dot(self.gdxxyy_zx_arr,self.Edzx_xxyy)[0],
+                         np.dot(-self.g0_arr,self.Edxxyy_xxyy)[0],  np.dot(self.gdxxyy_zr_arr,self.Edxxyy_zr)[0] ], 
                  
-                [np.dot(self.gdzr_xy_arrc,self.Edxy_zr)[0],  np.dot(self.gdzr_yz_arrc,self.Edyz_zr)[0], np.dot(self.gdzr_zx_arrc,self.Edzx_zr)[0], 
-                         np.dot(self.gdzr_xxyy_arrc,self.Edxxyy_zr)[0],  np.dot(self.g0_arr,self.Edzr_zr)[0] ], 
+                [np.dot(self.gdzr_xy_arr,self.Edxy_zr)[0],  np.dot(self.gdzr_yz_arr,self.Edyz_zr)[0], np.dot(self.gdzr_zx_arr,self.Edzx_zr)[0], 
+                         np.dot(self.gdzr_xxyy_arr,self.Edxxyy_zr)[0],  np.dot(-self.g0_arr,self.Edzr_zr)[0] ], 
                  
                  
                     ])
@@ -466,10 +431,10 @@ class Hconstruct:
         self.initial_energies('fcc')
         self.phasefactors(kv)
     
-        M = np.asarray([[-np.dot(self.g0_arr, self.Es)[0], np.dot(self.gspx_arr,self.Espx)[0],  np.dot(self.gspy_arr,self.Espy)[0],  np.dot(self.gspz_arr,self.Espz)[0] ]
-                [np.dot(self.gspx_arr,self.Espx)[0], -np.dot(self.g0_arr,self.Epxx)[0],  np.dot(self.gxy_arr,self.Exy)[0],  np.dot(self.gxz_arr,self.Exz)[0] ], 
-                [np.dot(self.gspy_arr,self.Espy)[0], np.dot(self.gyx_arr,self.Exy)[0],  -np.dot(self.g0_arr,self.Epyy)[0],  np.dot(self.gyz_arr,self.Eyz)[0] ], 
-                [np.dot(self.gspz_arr,self.Espz)[0], np.dot(self.gzx_arr,self.Exz)[0],  np.dot(self.gzy_arr,self.Eyz)[0],  -np.dot(self.g0_arr,self.Epzz)[0] ]
+        M = 12.*np.asarray([[np.dot(self.g0_arr, self.Es)[0], np.dot(self.gspx_arr,self.Espx)[0],  np.dot(self.gspy_arr,self.Espy)[0],  np.dot(self.gspz_arr,self.Espz)[0] ]
+                [np.dot(self.gspx_arr,self.Espx)[0], np.dot(self.g0_arr,self.Epxx)[0],  np.dot(self.gxy_arr,self.Exy)[0],  np.dot(self.gxz_arr,self.Exz)[0] ], 
+                [np.dot(self.gspy_arr,self.Espy)[0], np.dot(self.gyx_arr,self.Exy)[0],  np.dot(self.g0_arr,self.Epyy)[0],  np.dot(self.gyz_arr,self.Eyz)[0] ], 
+                [np.dot(self.gspz_arr,self.Espz)[0], np.dot(self.gzx_arr,self.Exz)[0],  np.dot(self.gzy_arr,self.Eyz)[0],  np.dot(self.g0_arr,self.Epzz)[0] ]
                     ])
         #Array of Hamiltonian matrix with energy values 
         return M
@@ -481,10 +446,10 @@ class Hconstruct:
         self.phasefactors(kv)
     
     
-        M = np.asarray([
-                [self.g0s*self.Exx,  self.gxys*self.Exy,  self.gxzs*self.Exz ], 
-                [self.gyxs*self.Exy,  self.g0s*self.Eyy,  self.gyzs*self.Eyz ], 
-                [self.gzxs*self.Exz,  self.gzys*self.Eyz,  self.g0s*self.Ezz ]
+        M = 12.*np.asarray([
+                [np.dot(self.g0_arr,self.Epxx)[0],  np.dot(self.gxy_arr,self.Exy)[0],  np.dot(self.gxz_arr,self.Exz)[0] ], 
+                [np.dot(self.gyx_arr,self.Exy)[0],  np.dot(self.g0_arr,self.Epyy)[0],  np.dot(self.gyz_arr,self.Eyz)[0] ], 
+                [np.dot(self.gzx_arr,self.Exz)[0],  np.dot(self.gzy_arr,self.Eyz)[0],  np.dot(self.g0_arr,self.Epzz)[0] ]
                     ])
         #Array of Hamiltonian matrix with energy values 
         return M
@@ -550,7 +515,6 @@ class Hconstruct:
         self.py_energies = []
         self.pz_energies = []
         k_diff = kf-ki
-        self.phasefactors(ki)
         self.initial_energies('fcc', 'p')
         loops = 200
         for i in range(loops):
@@ -687,11 +651,14 @@ def pband_script(con):
 def dband_script(con):
     
     
-    X = (2*np.pi/con.a)*np.array([0,1,0])
-    L = (np.pi/con.a)*np.array([1,1,1])
-    W = (2*np.pi/con.a)*np.array([0.5,1,0])
-    U = (2*np.pi/con.a)*np.array([0.25,1,0.25])
-    K = (np.pi/con.a)*np.array([1.5,1.5,0])
+   
+    
+    
+    X = (2*np.pi/con.a)*np.array([0, 1., 0])
+    L = (np.pi/con.a)*np.array([1., 1., 1.])
+    W = (2*np.pi/con.a)*np.array([0.5, 1., 0])
+    U = (2*np.pi/con.a)*np.array([0.25, 1., 0.25])
+    K = (np.pi/con.a)*np.array([1.5, 1.5, 0])
     Gamma = np.array([0,0,0])
 
 
@@ -720,7 +687,7 @@ def dband_script(con):
     
 
 con = Hconstruct() 
-pband_script(con) 
+dband_script(con) 
 
 
 

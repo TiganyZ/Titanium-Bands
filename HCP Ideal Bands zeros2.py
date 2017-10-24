@@ -65,7 +65,7 @@ class Hconstruct:
         self.b2 = self.b1 - self.d1
         self.b3 = self.b1 - self.d2
         
-        self.b4 = np.array([1./2.*self.a, (1/2.*np.sqrt(3))*self.a, -0.5*self.c])
+        self.b4 = self.b1 + self.c*np.array([0,0,-1])#2./3*self.d1 + 1./3*self.d2 - 1./2*self.d3
         self.b5 = self.b4 - self.d1
         self.b6 = self.b4 - self.d2
         
@@ -173,8 +173,8 @@ class Hconstruct:
         gxypm2 = np.array([1, -1, 1,      1, -1, 1 ])
         gyxpm2 = np.array([1, -1, 1,      1, -1, 1 ])
         
-        gxzpm2 = np.array([1, -1, 1,      -1, 1, 1 ])
-        gzxpm2 = np.array([1, -1, 1,      -1, 1, 1 ])
+        gxzpm2 = np.array([1, -1, 1,      -1, 1, -1 ])
+        gzxpm2 = np.array([1, -1, 1,      -1, 1, -1 ])
         
         gyzpm2 = np.array([1, 1, -1,      -1, -1, 1 ])
         gzypm2 = np.array([1, 1, -1,      -1, -1, 1 ])
@@ -192,42 +192,23 @@ class Hconstruct:
         ########################## d bands #####################################
         
         
-        gxy_xy = np.array([1, 1, 1,      1, 1, 1 ])
-        gxy_yz = np.array([1, 1, 1,      1, 1, 1 ])
-        gxy_zx = np.array([1, 1, 1,      1, 1, 1 ])
+        gxy_xy = np.array([-1, -1, -1, -1,         -1, -1, -1, -1,     -1, -1, -1, -1 ])
+        gxy_yz = np.array([1, -1, -1, 1,         -1, 1, 1, -1,     1, -1, -1, 1 ])
+        gxy_zx = np.array([-1, 1, 1, -1,         1, -1, -1, 1,     1, -1, -1, 1 ])
         
-        gxy_xxyy =np.array([1, 1, 1,      1, 1, 1 ])
+        gxy_xxyy = np.array([1, 1, 1, 1,         1, 1, 1, 1,     -1, 1, 1, -1 ])
         
-        gyz_zx = np.array([1, 1, 1,      1, 1, 1 ])
-        gyz_xxyy = np.array([1, 1, 1,      1, 1, 1 ])
-        gzx_xxyy = np.array([1, 1, 1,      1, 1, 1 ])
+        gyz_zx = np.array([1, -1, -1, 1,         1, -1, -1, 1,     -1, 1, 1, -1 ])
+        gyz_xxyy = np.array([-1, 1, 1, -1,         1, 1, -1, -1,     1, 1, 1, 1 ])
+        gzx_xxyy = np.array([-1, -1, -1, -1,         1, -1, -1, 1,     -1, -1, -1, -1 ])
         
-        gxxyy_xxyy = np.array([1, 1, 1,      1, 1, 1 ])
-        gzr_zr = np.array([1, 1, 1,      1, 1, 1 ])
+        gxxyy_xxyy = np.array([1, 1, 1, 1,         1, 1, 1, 1,     -1, -1, -1, -1 ])
+        gzr_zr = np.array([1, 1, 1, 1,         1, 1, 1, 1,     -1, -1, -1, -1 ])
         
-        gzx_zr = np.array([1, 1, 1,      1, 1, 1 ])
-        gxy_zr = np.array([1, 1, 1,      1, 1, 1 ])
-        gyz_zr = np.array([1, 1, 1,      1, 1, 1 ])
-        gxxyy_zr = np.array([1, 1, 1,      1, 1, 1 ])
-        
-        
-        gxy_xy2 = np.array([1, 1, 1,      1, 1, 1 ])
-        gxy_yz2 = np.array([1, 1, 1,      1, 1, 1 ])
-        gxy_zx2 = np.array([1, 1, 1,      1, 1, 1 ])
-        
-        gxy_xxyy2 =np.array([1, 1, 1,      1, 1, 1 ])
-        
-        gyz_zx2 = np.array([1, 1, 1,      1, 1, 1 ])
-        gyz_xxyy2 = np.array([1, 1, 1,      1, 1, 1 ])
-        gzx_xxyy2 = np.array([1, 1, 1,      1, 1, 1 ])
-        
-        gxxyy_xxyy2 = np.array([1, 1, 1,      1, 1, 1 ])
-        gzr_zr2 = np.array([1, 1, 1,      1, 1, 1 ])
-        
-        gzx_zr2 = np.array([1, 1, 1,      1, 1, 1 ])
-        gxy_zr2 = np.array([1, 1, 1,      1, 1, 1 ])
-        gyz_zr2 = np.array([1, 1, 1,      1, 1, 1 ])
-        gxxyy_zr2 = np.array([1, 1, 1,      1, 1, 1 ])
+        gzx_zr = np.array([1, 1, 1, 1,         1, -1, -1, 1,     -1, -1, -1, -1 ])
+        gxy_zr = np.array([-1, -1, -1, -1,         -1, -1, -1, -1,     -1, 1, 1, -1 ])
+        gyz_zr = np.array([1, -1, -1, 1,         1, 1, 1, 1,     -1, -1, -1, -1 ])
+        gxxyy_zr = np.array([-1, -1, -1, -1,         1, 1, 1, 1,     -1, -1, -1, -1 ])
         
         #Phase Factors for the Bloch Sum 
         self.g0_arr= np.array([np.exp(complex(0,kd1)),  #phase terms
@@ -313,7 +294,7 @@ class Hconstruct:
         
         ############################ d bands #################################
         
-        
+        """
         self.gdxy_xy_arr=self.g0_arr*gxy_xy
         
         self.gdyz_yz_arr=self.gdxy_xy_arr
@@ -390,86 +371,8 @@ class Hconstruct:
         
         self.gdxxyy_zr_arrc=self.g0c_arr*gxxyy_zr
         self.gdzr_xxyy_arrc = self.gdxxyy_zr_arrc
-        
-        ############################ d bands #################################
-        
-        
-        self.gdxy_xy_arr2=self.g0_arr2*gxy_xy2
-        
-        self.gdyz_yz_arr2=self.gdxy_xy_arr2
-        self.gdzx_zx_arr2=self.gdxy_xy_arr2
-        
-        self.gdxy_yz_arr2=self.g0_arr2*gxy_yz2
-        self.gdyz_xy_arr2=self.gdxy_yz_arr2
-        
-        self.gdxy_zx_arr2=self.g0_arr2*gxy_zx2
-        self.gdzx_xy_arr2=self.gdxy_zx_arr2
-        
-        self.gdxy_xxyy_arr2=self.g0_arr2*gxy_xxyy2
-        self.gdxxyy_xy_arr2 = self.gdxy_xxyy_arr2
-        
-        self.gdyz_xxyy_arr2=self.g0_arr2*gyz_xxyy2
-        self.gdxxyy_yz_arr2 = self.gdyz_xxyy_arr2
-        
-        self.gdzx_xxyy_arr2=self.g0_arr2*gzx_xxyy2
-        self.gdxxyy_zx_arr2 = self.gdzx_xxyy_arr2
-        
-        self.gdyz_zx_arr2=self.g0_arr2*gyz_zx2
-        self.gdzx_yz_arr2 = self.gdyz_zx_arr2
-        
-        self.gdxy_zr_arr2=self.g0_arr2*gxy_zr2
-        self.gdzr_xy_arr2 = self.gdxy_zr_arr2
-        
-        self.gdyz_zr_arr2=self.g0_arr2*gyz_zr2
-        self.gdzr_yz_arr2 = self.gdyz_zr_arr2
-        self.gdzx_zr_arr2=self.g0_arr2*gzx_zr2
-        self.gdzr_zx_arr2 = self.gdzx_zr_arr2
-        
-        self.gdxxyy_xxyy_arr2=self.g0_arr2*gxxyy_xxyy2
-        self.gdzr_zr_arr2=self.g0_arr2*gzr_zr2
-        
-        self.gdxxyy_zr_arr2=self.g0_arr2*gxxyy_zr2
-        self.gdzr_xxyy_arr2 = self.gdxxyy_zr_arr2
-        
-        ################     CONJUGATES     ###############
-        
-        
-        self.gdxy_xy_arrc2=self.g0c_arr2*gxy_xy2
-        
-        self.gdyz_yz_arrc2=self.gdxy_xy_arrc2
-        self.gdzx_zx_arrc2=self.gdxy_xy_arrc2
-        
-        self.gdxy_yz_arrc2=self.g0c_arr2*gxy_yz2
-        self.gdyz_xy_arrc2=self.gdxy_yz_arrc2
-        
-        self.gdxy_zx_arrc2=self.g0c_arr2*gxy_zx2
-        self.gdzx_xy_arrc2=self.gdxy_zx_arrc2
-        
-        self.gdxy_xxyy_arrc2=self.g0c_arr2*gxy_xxyy2
-        self.gdxxyy_xy_arrc2 = self.gdxy_xxyy_arrc2
-        
-        self.gdyz_xxyy_arrc2=self.g0c_arr2*gyz_xxyy2
-        self.gdxxyy_yz_arrc2 = self.gdyz_xxyy_arrc2
-        
-        self.gdzx_xxyy_arrc2=self.g0c_arr2*gzx_xxyy2
-        self.gdxxyy_zx_arrc2 = self.gdzx_xxyy_arrc2
-        
-        self.gdyz_zx_arrc2=self.g0c_arr2*gyz_zx2
-        self.gdzx_yz_arrc2 = self.gdyz_zx_arrc2
-        
-        self.gdxy_zr_arrc2=self.g0c_arr2*gxy_zr2
-        self.gdzr_xy_arrc2 = self.gdxy_zr_arrc2
-        
-        self.gdyz_zr_arrc2=self.g0c_arr2*gyz_zr2
-        self.gdzr_yz_arrc2 = self.gdyz_zr_arrc2
-        self.gdzx_zr_arrc2=self.g0c_arr2*gzx_zr2
-        self.gdzr_zx_arrc2 = self.gdzx_zr_arrc2
-        
-        self.gdxxyy_xxyy_arrc2=self.g0c_arr2*gxxyy_xxyy2
-        self.gdzr_zr_arrc2=self.g0c_arr2*gzr_zr2
-        
-        self.gdxxyy_zr_arrc2=self.g0c_arr2*gxxyy_zr2
-        self.gdzr_xxyy_arrc2 = self.gdxxyy_zr_arrc2
+        """
+
     
     def initial_energies(self, signifier, band):
         l = self.l
@@ -566,60 +469,21 @@ class Hconstruct:
         self.phasefactors(kv)
     
     
-        M = 12.*np.asarray([
-                [np.dot(self.g0_arr,self.Edxy_xy[:6])[0],  np.dot(self.gdxy_yz_arr,self.Edxy_yz[:6])[0], np.dot(self.gdxy_zx_arr,self.Edxy_zx[:6])[0],
-                         np.dot(self.gdxy_xxyy_arr,self.Edxy_xxyy[:6])[0],  np.dot(self.gdxy_zr_arr,self.Edxy_zr[:6])[0] ,
-                    np.dot(self.g0_arr2,self.Edxy_xy[6:])[0],  np.dot(self.gdxy_yz_arr2,self.Edxy_yz[6:])[0], np.dot(self.gdxy_zx_arr2,self.Edxy_zx[6:])[0],
-                         np.dot(self.gdxy_xxyy_arr2,self.Edxy_xxyy[6:])[0],  np.dot(self.gdxy_zr_arr2,self.Edxy_zr[6:])[0] ], 
+        M = -12*12.*np.asarray([
+                [-np.dot(self.g0_arr,self.Edxy_xy)[0],  np.dot(self.gdxy_yz_arr,self.Edxy_yz)[0], np.dot(self.gdxy_zx_arr,self.Edxy_zx)[0],
+                         np.dot(self.gdxy_xxyy_arr,self.Edxy_xxyy)[0],  np.dot(self.gdxy_zr_arr,self.Edxy_zr)[0]  ], 
                 
-                [np.dot(self.gdxy_yz_arr,self.Edxy_yz[:6])[0],  np.dot(self.g0_arr,self.Edyz_yz[:6])[0], np.dot(self.gdyz_zx_arr,self.Edyz_zx[:6])[0],
-                         np.dot(self.gdyz_xxyy_arr,self.Edyz_xxyy[:6])[0],  np.dot(self.gdyz_zr_arr,self.Edyz_zr[:6])[0], 
-                    np.dot(self.gdxy_yz_arr2,self.Edxy_yz[6:])[0],  np.dot(self.g0_arr2,self.Edyz_yz[6:])[0], np.dot(self.gdyz_zx_arr2,self.Edyz_zx[6:])[0],
-                         np.dot(self.gdyz_xxyy_arr2,self.Edyz_xxyy[6:])[0],  np.dot(self.gdyz_zr_arr2,self.Edyz_zr[6:])[0]], 
+                [np.dot(self.gdxy_yz_arr,self.Edxy_yz)[0],  -np.dot(self.g0_arr,self.Edyz_yz)[0], np.dot(self.gdyz_zx_arr,self.Edyz_zx)[0],
+                         np.dot(self.gdyz_xxyy_arr,self.Edyz_xxyy)[0],  np.dot(self.gdyz_zr_arr,self.Edyz_zr)[0] ], 
                 
-                [np.dot(self.gdxy_zx_arr,self.Edxy_zx[:6])[0],  np.dot(self.gdyz_zx_arr,self.Edyz_zx[:6])[0], np.dot(self.g0_arr,self.Edzx_zx[:6])[0],
-                         np.dot(self.gdzx_xxyy_arr,self.Edzx_xxyy[:6])[0],  np.dot(self.gdzx_zr_arr,self.Edzx_zr[:6])[0],
-                    np.dot(self.gdxy_zx_arr2,self.Edxy_zx[6:])[0],  np.dot(self.gdyz_zx_arr2,self.Edyz_zx[6:])[0], np.dot(self.g0_arr2,self.Edzx_zx[6:])[0],
-                         np.dot(self.gdzx_xxyy_arr2,self.Edzx_xxyy[6:])[0],  np.dot(self.gdzx_zr_arr2,self.Edzx_zr[6:])[0]], 
+                [np.dot(self.gdxy_zx_arr,self.Edxy_zx)[0],  np.dot(self.gdyz_zx_arr,self.Edyz_zx)[0], -np.dot(self.g0_arr,self.Edzx_zx)[0],
+                         np.dot(self.gdzx_xxyy_arr,self.Edzx_xxyy)[0],  np.dot(self.gdzx_zr_arr,self.Edzx_zr)[0] ], 
                            
-                [np.dot(self.gdxy_xxyy_arr,self.Edxy_xxyy[:6])[0], np.dot(self.gdyz_xxyy_arr,self.Edyz_xxyy[:6])[0], np.dot(self.gdzx_xxyy_arr,self.Edzx_xxyy[:6])[0],
-                         np.dot(self.g0_arr,self.Edxxyy_xxyy[:6])[0],  np.dot(self.gdxxyy_zr_arr,self.Edxxyy_zr[:6])[0],
-                    np.dot(self.gdxy_xxyy_arr2,self.Edxy_xxyy[6:])[0], np.dot(self.gdyz_xxyy_arr2,self.Edyz_xxyy[6:])[0], np.dot(self.gdzx_xxyy_arr2,self.Edzx_xxyy[6:])[0],
-                         np.dot(self.g0_arr2,self.Edxxyy_xxyy[6:])[0],  np.dot(self.gdxxyy_zr_arr2,self.Edxxyy_zr[6:])[0]], 
+                [np.dot(self.gdxy_xxyy_arr,self.Edxy_xxyy)[0], np.dot(self.gdyz_xxyy_arr,self.Edyz_xxyy)[0], np.dot(self.gdzx_xxyy_arr,self.Edzx_xxyy)[0],
+                         -np.dot(self.g0_arr,self.Edxxyy_xxyy)[0],  np.dot(self.gdxxyy_zr_arr,self.Edxxyy_zr)[0] ], 
                  
-                [np.dot(self.gdxy_zr_arr,self.Edxy_zr[:6])[0],  np.dot(self.gdyz_zr_arr,self.Edyz_zr[:6])[0], np.dot(self.gdzx_zr_arr,self.Edzx_zr[:6])[0], 
-                         np.dot(self.gdxxyy_zr_arr,self.Edxxyy_zr[:6])[0],  np.dot(self.g0_arr,self.Edzr_zr[:6])[0],
-                    np.dot(self.gdxy_zr_arr2,self.Edxy_zr[6:])[0],  np.dot(self.gdyz_zr_arr2,self.Edyz_zr[6:])[0], np.dot(self.gdzx_zr_arr2,self.Edzx_zr[6:])[0], 
-                         np.dot(self.gdxxyy_zr_arr2,self.Edxxyy_zr[6:])[0],  np.dot(self.g0_arr2,self.Edzr_zr[6:])[0] ], 
-                
-                
-                
-                
-                
-                [np.dot(self.g0c_arr2,self.Edxy_xy[:6])[0],  np.dot(self.gdxy_yz_arrc2,self.Edxy_yz[:6])[0], np.dot(self.gdxy_zx_arrc2,self.Edxy_zx[:6])[0],
-                         np.dot(self.gdxy_xxyy_arr2,self.Edxy_xxyy[:6])[0],  np.dot(self.gdxy_zr_arrc2,self.Edxy_zr[:6])[0] ,
-                    np.dot(self.g0c_arr,self.Edxy_xy[6:])[0],  np.dot(self.gdxy_yz_arrc,self.Edxy_yz[6:])[0], np.dot(self.gdxy_zx_arrc,self.Edxy_zx[6:])[0],
-                         np.dot(self.gdxy_xxyy_arrc,self.Edxy_xxyy[6:])[0],  np.dot(self.gdxy_zr_arrc,self.Edxy_zr[6:])[0] ], 
-                
-                [np.dot(self.gdxy_yz_arrc2,self.Edxy_yz[:6])[0],  np.dot(self.g0c_arr2,self.Edyz_yz[:6])[0], np.dot(self.gdyz_zx_arrc2,self.Edyz_zx[:6])[0],
-                         np.dot(self.gdyz_xxyy_arrc2,self.Edyz_xxyy[:6])[0],  np.dot(self.gdyz_zr_arrc2,self.Edyz_zr[:6])[0], 
-                    np.dot(self.gdxy_yz_arrc,self.Edxy_yz[6:])[0],  np.dot(self.g0c_arr,self.Edyz_yz[6:])[0], np.dot(self.gdyz_zx_arr,self.Edyz_zx[6:])[0],
-                         np.dot(self.gdyz_xxyy_arrc,self.Edyz_xxyy[6:])[0],  np.dot(self.gdyz_zr_arrc,self.Edyz_zr[6:])[0]], 
-                
-                [np.dot(self.gdxy_zx_arrc2,self.Edxy_zx[:6])[0],  np.dot(self.gdyz_zx_arrc2,self.Edyz_zx[:6])[0], np.dot(self.g0c_arr2,self.Edzx_zx[:6])[0],
-                         np.dot(self.gdzx_xxyy_arrc2,self.Edzx_xxyy[:6])[0],  np.dot(self.gdzx_zr_arrc2,self.Edzx_zr[:6])[0],
-                    np.dot(self.gdxy_zx_arrc,self.Edxy_zx[6:])[0],  np.dot(self.gdyz_zx_arrc,self.Edyz_zx[6:])[0], np.dot(self.g0c_arr,self.Edzx_zx[6:])[0],
-                         np.dot(self.gdzx_xxyy_arrc,self.Edzx_xxyy[6:])[0],  np.dot(self.gdzx_zr_arrc,self.Edzx_zr[6:])[0]], 
-                           
-                [np.dot(self.gdxy_xxyy_arrc2,self.Edxy_xxyy[:6])[0], np.dot(self.gdyz_xxyy_arrc2,self.Edyz_xxyy[:6])[0], np.dot(self.gdzx_xxyy_arrc2,self.Edzx_xxyy[:6])[0],
-                         np.dot(self.g0c_arr2,self.Edxxyy_xxyy[:6])[0],  np.dot(self.gdxxyy_zr_arrc2,self.Edxxyy_zr[:6])[0],
-                    np.dot(self.gdxy_xxyy_arrc,self.Edxy_xxyy[6:])[0], np.dot(self.gdyz_xxyy_arrc,self.Edyz_xxyy[6:])[0], np.dot(self.gdzx_xxyy_arrc,self.Edzx_xxyy[6:])[0],
-                         np.dot(self.g0c_arr,self.Edxxyy_xxyy[6:])[0],  np.dot(self.gdxxyy_zr_arrc,self.Edxxyy_zr[6:])[0]], 
-                 
-                [np.dot(self.gdxy_zr_arrc2,self.Edxy_zr[:6])[0],  np.dot(self.gdyz_zr_arrc2,self.Edyz_zr[:6])[0], np.dot(self.gdzx_zr_arrc2,self.Edzx_zr[:6])[0], 
-                         np.dot(self.gdxxyy_zr_arrc2,self.Edxxyy_zr[:6])[0],  np.dot(self.g0c_arr2,self.Edzr_zr[:6])[0],
-                    np.dot(self.gdxy_zr_arrc,self.Edxy_zr[6:])[0],  np.dot(self.gdyz_zr_arrc,self.Edyz_zr[6:])[0], np.dot(self.gdzx_zr_arrc,self.Edzx_zr[6:])[0], 
-                         np.dot(self.gdxxyy_zr_arrc,self.Edxxyy_zr[6:])[0],  np.dot(self.g0c_arr,self.Edzr_zr[6:])[0] ]
+                [np.dot(self.gdxy_zr_arr,self.Edxy_zr)[0],  np.dot(self.gdyz_zr_arr,self.Edyz_zr)[0], np.dot(self.gdzx_zr_arr,self.Edzx_zr)[0], 
+                         np.dot(self.gdxxyy_zr_arr,self.Edxxyy_zr)[0],  -np.dot(self.g0_arr,self.Edzr_zr)[0] ], 
                  
                  
                     ])
@@ -664,19 +528,39 @@ class Hconstruct:
     
         #Not sure if this should have zeros in due to the second atom
         M = 12.*np.asarray([
-                [np.dot(self.g0_arr,self.Epxx[:6])[0],  np.dot(self.gxy_arr,self.Exy[:6])[0],  np.dot(self.gxz_arr,self.Exz[:6])[0],
-                        np.dot(self.g0_arr2,self.Epxx[6:])[0],  np.dot(self.gxy_arr2,self.Exy[6:])[0],  np.dot(self.gxz_arr2,self.Exz[6:])[0]], 
-                [np.dot(self.gxy_arr,self.Exy[:6])[0],  np.dot(self.g0_arr,self.Epyy[:6])[0],  np.dot(self.gyz_arr,self.Eyz[:6])[0], 
-                        np.dot(self.gxy_arr2,self.Exy[6:])[0],  np.dot(self.g0_arr2,self.Epyy[6:])[0],  np.dot(self.gyz_arr2,self.Eyz[6:])[0]], 
-                [np.dot(self.gxz_arr,self.Exz[:6])[0],  np.dot(self.gyz_arr,self.Eyz[:6])[0],  np.dot(self.g0_arr,self.Epzz[:6])[0],
-                        np.dot(self.gxz_arr2,self.Exz[6:])[0],  np.dot(self.gyz_arr2,self.Eyz[6:])[0],  np.dot(self.g0_arr2,self.Epzz[6:])[0]],
-                
-                [np.dot(self.g0c_arr2,self.Epxx[6:])[0],  np.dot(self.gyx_arr2,self.Exy[6:])[0],  np.dot(self.gzx_arr2,self.Exz[6:])[0],
-                        np.dot(self.g0c_arr,self.Epxx[:6])[0],  np.dot(self.gyx_arr,self.Exy[:6])[0],  np.dot(self.gzx_arr,self.Exz[:6])[0]], 
-                [np.dot(self.gyx_arr2,self.Exy[6:])[0],  np.dot(self.g0c_arr2,self.Epyy[6:])[0],  np.dot(self.gzy_arr2,self.Eyz[6:])[0], 
-                        np.dot(self.gyx_arr,self.Exy[:6])[0],  np.dot(self.g0c_arr,self.Epyy[:6])[0],  np.dot(self.gzy_arr,self.Eyz[:6])[0]], 
-                [np.dot(self.gzx_arr2,self.Exz[6:])[0],  np.dot(self.gzy_arr2,self.Eyz[6:])[0],  np.dot(self.g0c_arr2,self.Epzz[6:])[0],
-                        np.dot(self.gzx_arr,self.Exz[:6])[0],  np.dot(self.gzy_arr,self.Eyz[:6])[0],  np.dot(self.g0c_arr,self.Epzz[:6])[0]]
+                [np.dot(self.g0_arrT,self.Epxx)[0],  0,  0,
+                        (np.dot(self.g0_arr,self.Epxx[:6])[0] + np.dot(self.g0_arr2,self.Epxx[6:])[0]), 
+                                (np.dot(self.gxy_arr,self.Exy[:6])[0] + np.dot(self.gxy_arr2,self.Exy[6:])[0]),  
+                                        (np.dot(self.gxz_arr,self.Exz[:6])[0] + np.dot(self.gxz_arr2,self.Exz[6:])[0])  ], 
+                 
+                [ 0 ,  np.dot(self.g0_arrT,self.Epyy)[0],   0 , 
+                        (np.dot(self.gxy_arr,self.Exy[:6])[0] + np.dot(self.gxy_arr2,self.Exy[6:])[0]) , 
+                               (np.dot(self.g0_arr,self.Epyy[:6])[0] + np.dot(self.g0_arr2,self.Epyy[6:])[0]) ,
+                                   (np.dot(self.gyz_arr,self.Eyz[:6])[0] + np.dot(self.gyz_arr2,self.Eyz[6:])[0]) ], 
+    
+    
+                [ 0,  0,  np.dot(self.g0_arrT,self.Epzz)[0],
+                        (np.dot(self.gxz_arr,self.Exz[:6])[0] + np.dot(self.gxz_arr2,self.Exz[6:])[0]),  
+                             (np.dot(self.gyz_arr,self.Eyz[:6])[0] + np.dot(self.gyz_arr2,self.Eyz[6:])[0]), 
+                                 (np.dot(self.g0_arr,self.Epzz[:6])[0] + np.dot(self.g0_arr2,self.Epzz[6:])[0]) ],
+                 
+                 
+                [(np.dot(self.g0c_arr,self.Epxx[:6])[0] + np.dot(self.g0c_arr2,self.Epxx[6:])[0]), 
+                                (np.dot(self.gyx_arr,self.Exy[:6])[0] + np.dot(self.gyx_arr2,self.Exy[6:])[0]),  
+                                        (np.dot(self.gzx_arr,self.Exz[:6])[0] + np.dot(self.gzx_arr2,self.Exz[6:])[0]), 
+                   np.dot(self.g0_arrT,self.Epxx)[0],  0,  0 ], 
+                 
+                [ (np.dot(self.gyx_arr,self.Exy[:6])[0] +np.dot(self.gyx_arr2,self.Exy[6:])[0]), 
+                               (np.dot(self.g0c_arr,self.Epyy[:6])[0] + np.dot(self.g0c_arr2,self.Epyy[6:])[0]),
+                                   (np.dot(self.gzy_arr,self.Eyz[:6])[0] + np.dot(self.gzy_arr2,self.Eyz[6:])[0]),
+                   0 ,  np.dot(self.g0_arrT,self.Epyy)[0],   0  ], 
+    
+    
+                [ (np.dot(self.gzx_arr,self.Exz[:6])[0] + np.dot(self.gzx_arr2,self.Exz[6:])[0]),  
+                             (np.dot(self.gzy_arr,self.Eyz[:6])[0] + np.dot(self.gzy_arr2,self.Eyz[6:])[0]), 
+                                 (np.dot(self.g0c_arr,self.Epzz[:6])[0] + np.dot(self.g0c_arr2,self.Epzz[6:])[0]),
+                   0,  0,  np.dot(self.g0_arrT,self.Epzz)[0]],
+            
                     ])
         #Array of Hamiltonian matrix with energy values 
         return M
@@ -791,12 +675,6 @@ class Hconstruct:
         self.zx_energies = []
         self.xxyy_energies = []
         self.zr_energies = []
-        
-        self.xy_energies2 = []
-        self.yz_energies2 = []
-        self.zx_energies2 = []
-        self.xxyy_energies2 = []
-        self.zr_energies2 = []
         k_diff = kf-ki
         self.initial_energies('fcc', 'd')
         loops = 200
@@ -811,12 +689,6 @@ class Hconstruct:
             self.zx_energies.append(eigenvals[2])
             self.xxyy_energies.append(eigenvals[3])
             self.zr_energies.append(eigenvals[4])
-            
-            self.xy_energies2.append(eigenvals[5])
-            self.yz_energies2.append(eigenvals[6])
-            self.zx_energies2.append(eigenvals[7])
-            self.xxyy_energies2.append(eigenvals[8])
-            self.zr_energies2.append(eigenvals[9])
             self.kvals.append((i/float(loops)))
 
         ax.plot(self.kvals, self.xy_energies)#, marker=style, color=k)
@@ -824,11 +696,6 @@ class Hconstruct:
         ax.plot(self.kvals, self.zx_energies)#, r*)
         ax.plot(self.kvals, self.xxyy_energies)#, r*)
         ax.plot(self.kvals, self.zr_energies)#, r*)
-        ax.plot(self.kvals, self.xy_energies2)#, marker=style, color=k)
-        ax.plot(self.kvals, self.yz_energies2)#, bo)
-        ax.plot(self.kvals, self.zx_energies2)#, r*)
-        ax.plot(self.kvals, self.xxyy_energies2)#, r*)
-        ax.plot(self.kvals, self.zr_energies2)#, r*)
         
         ax.set_title('%s to %s'%(n1, n2)) 
         if reverse==True:
@@ -964,7 +831,7 @@ def dband_script(con):
     
 
 con = Hconstruct() 
-dband_script(con) 
+pband_script(con) 
 
 
 

@@ -28,7 +28,7 @@ import scipy as sp
 
 class Hconstruct:
     
-    def __init__(self, k=np.array([0,0,0]), a = 1., d = np.sqrt(2)*((16*np.pi/3.)**(1./3)),#1.61, #a is in Angstrom
+    def __init__(self, k=np.array([0,0,0]), a = 1., d = (2*np.pi/3.)**(1./3),#1.61, #a is in Angstrom
                  d1=np.array([0,1,1]), d2=np.array([1,0,1]), 
                  d3=np.array([1,1,0]), d4=np.array([0,-1,1]),
                  d5=np.array([0,1,-1]), d6=np.array([0,-1,-1]),
@@ -40,6 +40,7 @@ class Hconstruct:
 
         self.a = a
         self.d = d
+        
         self.d1 = (self.a/2.)*d1
         self.d2 = (self.a/2.)*d2
         self.d3 = (self.a/2.)*d3
@@ -54,7 +55,9 @@ class Hconstruct:
         self.d12 = (self.a/2.)*d12
         
         self.darr = np.asarray([self.d1,self.d4,self.d5,self.d6,self.d2,self.d7,
-                           self.d8,self.d9,self.d3,self.d10, self.d11, self.d12])/np.sqrt(2)
+                           self.d8,self.d9,self.d3,self.d10, self.d11, self.d12])
+        self.mag_arr = np.linalg.norm(self.darr, axis=1).reshape(12,1)*self.d
+        self.darr = self.darr/np.sqrt(2)
         self.l = (self.darr[:, :1].astype(np.complex_))
         self.m = (self.darr[:, 1:2].astype(np.complex_))
         self.n = (self.darr[:, 2:3].astype(np.complex_))
@@ -69,6 +72,7 @@ class Hconstruct:
         self.Es = Es
         self.Ep = Ep
         self.Ed = Ed
+        self.d = self.mag_arr
         self.sssig = sssig/(self.d)
         self.spsig = spsig/(self.d**2)
         self.ppsig = ppsig/(self.d**3)
@@ -388,21 +392,21 @@ class Hconstruct:
         self.phasefactors(kv)
     
     
-        M = -12*12.*np.asarray([
-                [-np.dot(self.g0_arr,self.Edxy_xy)[0],  np.dot(self.gdxy_yz_arr,self.Edxy_yz)[0], np.dot(self.gdxy_zx_arr,self.Edxy_zx)[0],
-                         np.dot(self.gdxy_xxyy_arr,self.Edxy_xxyy)[0],  np.dot(self.gdxy_zr_arr,self.Edxy_zr)[0]  ], 
+        M = np.asarray([
+                [np.dot(self.g0_arr,self.Edxy_xy)[0],  np.dot(self.g0_arr,self.Edxy_yz)[0], np.dot(self.g0_arr,self.Edxy_zx)[0],
+                         np.dot(self.g0_arr,self.Edxy_xxyy)[0],  np.dot(self.g0_arr,self.Edxy_zr)[0]  ], 
                 
-                [np.dot(self.gdxy_yz_arr,self.Edxy_yz)[0],  -np.dot(self.g0_arr,self.Edyz_yz)[0], np.dot(self.gdyz_zx_arr,self.Edyz_zx)[0],
-                         np.dot(self.gdyz_xxyy_arr,self.Edyz_xxyy)[0],  np.dot(self.gdyz_zr_arr,self.Edyz_zr)[0] ], 
+                [np.dot(self.g0_arr,self.Edxy_yz)[0],  np.dot(self.g0_arr,self.Edyz_yz)[0], np.dot(self.g0_arr,self.Edyz_zx)[0],
+                         np.dot(self.g0_arr,self.Edyz_xxyy)[0],  np.dot(self.g0_arr,self.Edyz_zr)[0] ], 
                 
-                [np.dot(self.gdxy_zx_arr,self.Edxy_zx)[0],  np.dot(self.gdyz_zx_arr,self.Edyz_zx)[0], -np.dot(self.g0_arr,self.Edzx_zx)[0],
-                         np.dot(self.gdzx_xxyy_arr,self.Edzx_xxyy)[0],  np.dot(self.gdzx_zr_arr,self.Edzx_zr)[0] ], 
+                [np.dot(self.g0_arr,self.Edxy_zx)[0],  np.dot(self.g0_arr,self.Edyz_zx)[0], np.dot(self.g0_arr,self.Edzx_zx)[0],
+                         np.dot(self.g0_arr,self.Edzx_xxyy)[0],  np.dot(self.g0_arr,self.Edzx_zr)[0] ], 
                            
-                [np.dot(self.gdxy_xxyy_arr,self.Edxy_xxyy)[0], np.dot(self.gdyz_xxyy_arr,self.Edyz_xxyy)[0], np.dot(self.gdzx_xxyy_arr,self.Edzx_xxyy)[0],
-                         -np.dot(self.g0_arr,self.Edxxyy_xxyy)[0],  np.dot(self.gdxxyy_zr_arr,self.Edxxyy_zr)[0] ], 
+                [np.dot(self.g0_arr,self.Edxy_xxyy)[0], np.dot(self.g0_arr,self.Edyz_xxyy)[0], np.dot(self.g0_arr,self.Edzx_xxyy)[0],
+                         np.dot(self.g0_arr,self.Edxxyy_xxyy)[0],  np.dot(self.g0_arr,self.Edxxyy_zr)[0] ], 
                  
-                [np.dot(self.gdxy_zr_arr,self.Edxy_zr)[0],  np.dot(self.gdyz_zr_arr,self.Edyz_zr)[0], np.dot(self.gdzx_zr_arr,self.Edzx_zr)[0], 
-                         np.dot(self.gdxxyy_zr_arr,self.Edxxyy_zr)[0],  -np.dot(self.g0_arr,self.Edzr_zr)[0] ], 
+                [np.dot(self.g0_arr,self.Edxy_zr)[0],  np.dot(self.g0_arr,self.Edyz_zr)[0], np.dot(self.g0_arr,self.Edzx_zr)[0], 
+                         np.dot(self.g0_arr,self.Edxxyy_zr)[0],  np.dot(self.g0_arr,self.Edzr_zr)[0] ], 
                  
                  
                     ])
@@ -431,7 +435,7 @@ class Hconstruct:
         self.initial_energies('fcc')
         self.phasefactors(kv)
     
-        M = 12.*np.asarray([[np.dot(self.g0_arr, self.Es)[0], np.dot(self.gspx_arr,self.Espx)[0],  np.dot(self.gspy_arr,self.Espy)[0],  np.dot(self.gspz_arr,self.Espz)[0] ]
+        M = np.asarray([[np.dot(self.g0_arr, self.Es)[0], np.dot(self.gspx_arr,self.Espx)[0],  np.dot(self.gspy_arr,self.Espy)[0],  np.dot(self.gspz_arr,self.Espz)[0] ]
                 [np.dot(self.gspx_arr,self.Espx)[0], np.dot(self.g0_arr,self.Epxx)[0],  np.dot(self.gxy_arr,self.Exy)[0],  np.dot(self.gxz_arr,self.Exz)[0] ], 
                 [np.dot(self.gspy_arr,self.Espy)[0], np.dot(self.gyx_arr,self.Exy)[0],  np.dot(self.g0_arr,self.Epyy)[0],  np.dot(self.gyz_arr,self.Eyz)[0] ], 
                 [np.dot(self.gspz_arr,self.Espz)[0], np.dot(self.gzx_arr,self.Exz)[0],  np.dot(self.gzy_arr,self.Eyz)[0],  np.dot(self.g0_arr,self.Epzz)[0] ]
@@ -447,10 +451,10 @@ class Hconstruct:
         
         
     
-        M = 12.*np.asarray([
-                [np.dot(self.g0_arr,self.Epxx)[0],  np.dot(self.gxy_arr,self.Exy)[0],  np.dot(self.gxz_arr,self.Exz)[0] ], 
-                [np.dot(self.gyx_arr,self.Exy)[0],  np.dot(self.g0_arr,self.Epyy)[0],  np.dot(self.gyz_arr,self.Eyz)[0] ], 
-                [np.dot(self.gzx_arr,self.Exz)[0],  np.dot(self.gzy_arr,self.Eyz)[0],  np.dot(self.g0_arr,self.Epzz)[0] ]
+        M = np.asarray([
+                [np.dot(self.g0_arr,self.Epxx)[0],  np.dot(self.g0_arr,self.Exy)[0],  np.dot(self.g0_arr,self.Exz)[0] ], 
+                [np.dot(self.g0c_arr,self.Exy)[0],  np.dot(self.g0_arr,self.Epyy)[0],  np.dot(self.g0_arr,self.Eyz)[0] ], 
+                [np.dot(self.g0c_arr,self.Exz)[0],  np.dot(self.g0c_arr,self.Eyz)[0],  np.dot(self.g0_arr,self.Epzz)[0] ]
                     ])
         #Array of Hamiltonian matrix with energy values 
         return M
@@ -688,7 +692,7 @@ def dband_script(con):
     
 
 con = Hconstruct() 
-dband_script(con) 
+sband_script(con) 
 
 
 

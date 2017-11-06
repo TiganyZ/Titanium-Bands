@@ -54,12 +54,12 @@ class Hconstruct:
         self.d1 = (self.a)*d1
         self.d2 = (self.a/2.)*d2
         #self.d3 = (self.c)*d3
-        self.d3 = (self.a/2.)*d4
+        self.d3 = (self.a)*d4
         
         self.d4 = (self.a/2.)*d5
         self.d5 = (self.a/2.)*d6
         #self.d7 = (self.c)*d7
-        self.d6 = (self.a)*d8
+        self.d6 = (self.a/2.)*d8
         self.b1 = np.array([1./2.*self.a, (1/2.*np.sqrt(3))*self.a, 0.5*self.c])
         #self.b1 = 2./3*self.d1 + 1./3*self.d2 + 1./2*self.d3
         self.b2 = self.b1 - self.d1
@@ -77,9 +77,9 @@ class Hconstruct:
                             
         self.darr = np.asarray([self.d1,self.d2,self.d3,self.d4,self.d5,self.d6,
                            self.b1/self.bmag, self.b2/self.bmag,self.b3/self.bmag,self.b4/self.bmag,self.b5/self.bmag,self.b6/self.bmag])
-        self.l = np.abs(self.darr[:, :1].astype(np.complex_))
-        self.m = np.abs(self.darr[:, 1:2].astype(np.complex_))
-        self.n = np.abs(self.darr[:, 2:3].astype(np.complex_))
+        self.l = (self.darr[:, :1].astype(np.complex_))
+        self.m = (self.darr[:, 1:2].astype(np.complex_))
+        self.n = (self.darr[:, 2:3].astype(np.complex_))
         
         self.ll = self.l*self.l
         self.mm = self.m*self.m
@@ -664,19 +664,19 @@ class Hconstruct:
     
         #Not sure if this should have zeros in due to the second atom
         M = 12.*np.asarray([
-                [np.dot(self.g0_arr,self.Epxx[:6])[0],  np.dot(self.gxy_arr,self.Exy[:6])[0],  np.dot(self.gxz_arr,self.Exz[:6])[0],
-                        np.dot(self.g0_arr2,self.Epxx[6:])[0],  np.dot(self.gxy_arr2,self.Exy[6:])[0],  np.dot(self.gxz_arr2,self.Exz[6:])[0]], 
-                [np.dot(self.gxy_arr,self.Exy[:6])[0],  np.dot(self.g0_arr,self.Epyy[:6])[0],  np.dot(self.gyz_arr,self.Eyz[:6])[0], 
-                        np.dot(self.gxy_arr2,self.Exy[6:])[0],  np.dot(self.g0_arr2,self.Epyy[6:])[0],  np.dot(self.gyz_arr2,self.Eyz[6:])[0]], 
-                [np.dot(self.gxz_arr,self.Exz[:6])[0],  np.dot(self.gyz_arr,self.Eyz[:6])[0],  np.dot(self.g0_arr,self.Epzz[:6])[0],
-                        np.dot(self.gxz_arr2,self.Exz[6:])[0],  np.dot(self.gyz_arr2,self.Eyz[6:])[0],  np.dot(self.g0_arr2,self.Epzz[6:])[0]],
+                [np.dot(self.g0_arr,self.Epxx[:6])[0],  np.dot(self.g0_arr,self.Exy[:6])[0],  np.dot(self.g0_arr,self.Exz[:6])[0],
+                        np.dot(self.g0_arr2,self.Epxx[6:])[0],  np.dot(self.g0_arr2,self.Exy[6:])[0],  np.dot(self.g0_arr2,self.Exz[6:])[0]], 
+                [np.dot(self.g0_arr,self.Exy[:6])[0],  np.dot(self.g0_arr,self.Epyy[:6])[0],  np.dot(self.g0_arr,self.Eyz[:6])[0], 
+                        np.dot(self.g0_arr2,self.Exy[6:])[0],  np.dot(self.g0_arr2,self.Epyy[6:])[0],  np.dot(self.g0_arr2,self.Eyz[6:])[0]], 
+                [np.dot(self.g0_arr,self.Exz[:6])[0],  np.dot(self.g0_arr,self.Eyz[:6])[0],  np.dot(self.g0_arr,self.Epzz[:6])[0],
+                        np.dot(self.g0_arr2,self.Exz[6:])[0],  np.dot(self.g0_arr2,self.Eyz[6:])[0],  np.dot(self.g0_arr2,self.Epzz[6:])[0]],
                 
-                [np.dot(self.g0c_arr2,self.Epxx[6:])[0],  np.dot(self.gyx_arr2,self.Exy[6:])[0],  np.dot(self.gzx_arr2,self.Exz[6:])[0],
-                        np.dot(self.g0c_arr,self.Epxx[:6])[0],  np.dot(self.gyx_arr,self.Exy[:6])[0],  np.dot(self.gzx_arr,self.Exz[:6])[0]], 
-                [np.dot(self.gyx_arr2,self.Exy[6:])[0],  np.dot(self.g0c_arr2,self.Epyy[6:])[0],  np.dot(self.gzy_arr2,self.Eyz[6:])[0], 
-                        np.dot(self.gyx_arr,self.Exy[:6])[0],  np.dot(self.g0c_arr,self.Epyy[:6])[0],  np.dot(self.gzy_arr,self.Eyz[:6])[0]], 
-                [np.dot(self.gzx_arr2,self.Exz[6:])[0],  np.dot(self.gzy_arr2,self.Eyz[6:])[0],  np.dot(self.g0c_arr2,self.Epzz[6:])[0],
-                        np.dot(self.gzx_arr,self.Exz[:6])[0],  np.dot(self.gzy_arr,self.Eyz[:6])[0],  np.dot(self.g0c_arr,self.Epzz[:6])[0]]
+                [np.dot(self.g0c_arr2,self.Epxx[6:])[0],  np.dot(self.g0c_arr2,self.Exy[6:])[0],  np.dot(self.g0c_arr2,self.Exz[6:])[0],
+                        np.dot(self.g0c_arr,self.Epxx[:6])[0],  np.dot(self.g0c_arr,self.Exy[:6])[0],  np.dot(self.g0c_arr,self.Exz[:6])[0]], 
+                [np.dot(self.g0c_arr2,self.Exy[6:])[0],  np.dot(self.g0c_arr2,self.Epyy[6:])[0],  np.dot(self.g0c_arr2,self.Eyz[6:])[0], 
+                        np.dot(self.g0c_arr,self.Exy[:6])[0],  np.dot(self.g0c_arr,self.Epyy[:6])[0],  np.dot(self.g0c_arr,self.Eyz[:6])[0]], 
+                [np.dot(self.g0c_arr2,self.Exz[6:])[0],  np.dot(self.g0c_arr2,self.Eyz[6:])[0],  np.dot(self.g0c_arr2,self.Epzz[6:])[0],
+                        np.dot(self.g0c_arr,self.Exz[:6])[0],  np.dot(self.g0c_arr,self.Eyz[:6])[0],  np.dot(self.g0c_arr,self.Epzz[:6])[0]]
                     ])
         #Array of Hamiltonian matrix with energy values 
         return M
@@ -964,7 +964,7 @@ def dband_script(con):
     
 
 con = Hconstruct() 
-dband_script(con) 
+pband_script(con) 
 
 
 

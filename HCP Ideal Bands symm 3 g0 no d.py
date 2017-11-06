@@ -54,25 +54,25 @@ class Hconstruct:
         self.d1 = (self.a)*d1
         self.d2 = (self.a/2.)*d2
         #self.d3 = (self.c)*d3
-        self.d3 = (self.a)*d4
+        self.d3 = (self.a/2.)*d4
         
         self.d4 = (self.a/2.)*d5
         self.d5 = (self.a/2.)*d6
         #self.d7 = (self.c)*d7
-        self.d6 = (self.a/2.)*d8
-        self.b1 = np.array([1./2.*self.a, (1/2.*np.sqrt(3))*self.a, 0.5*self.c])
+        self.d6 = (self.a)*d8
+        self.b1 = np.array([1./2.*self.a, ((1/6.)*np.sqrt(3))*self.a, 0.5*self.c])
         #self.b1 = 2./3*self.d1 + 1./3*self.d2 + 1./2*self.d3
         self.b2 = self.b1 - self.d1
         self.b3 = self.b1 - self.d2
         
-        self.b4 = np.array([1./2.*self.a, (1/2.*np.sqrt(3))*self.a, -0.5*self.c])
+        self.b4 = np.array([1./2.*self.a, ((1/6.)*np.sqrt(3))*self.a, -0.5*self.c])
         self.b5 = self.b4 - self.d1
         self.b6 = self.b4 - self.d2
         
         
         
         
-        self.bmag = np.sqrt(self.a**2 + 0.25*(self.c**2))
+        self.bmag = np.sqrt((1/3.)*self.a**2 + 0.25*(self.c**2))
                             
                             
         self.darr = np.asarray([self.d1,self.d2,self.d3,self.d4,self.d5,self.d6,
@@ -964,7 +964,8 @@ def dband_script(con):
     
 
 con = Hconstruct() 
-pband_script(con) 
+p
+band_script(con) 
 
 
 

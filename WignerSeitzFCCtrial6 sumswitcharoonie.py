@@ -356,7 +356,26 @@ class Hconstruct:
                 self.Edzr_zr = (((nn - 0.5*(ll + mm))**2)*self.ddsig       +      3*nn*(mm + ll)*self.ddpi      +       0.75*((ll +  mm)**2)*self.dddelta)
                 
                 
-            
+                self.Edxy_xy = ( 3*ll*mm*self.ddsig     +   (ll + mm -4*ll*mm)*self.ddpi    +    (nn + ll*mm)*self.dddelta )
+                self.Edyz_yz = (3*mm*nn*self.ddsig      +   (mm + nn -4*mm*nn)*self.ddpi    +    (ll + mm*nn)*self.dddelta)
+                self.Edzx_zx = (3*nn*ll*self.ddsig      +   (nn + ll -4*nn*ll)*self.ddpi    +    (mm + nn*ll)*self.dddelta)
+                
+                self.Edxy_yz = (3*l*mm*n*self.ddsig     +   l*n*(ones -  4*mm )*self.ddpi   +    l*n*(mm - ones)*self.dddelta)
+                self.Edxy_zx = (3*ll*m*n*self.ddsig     +   m*n*(ones -  4*ll )*self.ddpi   +    m*n*(ll - ones)*self.dddelta)
+                self.Edyz_zx = (3*nn*m*l*self.ddsig     +   m*l*(ones -  4*nn )*self.ddpi   +    m*l*(nn - ones)*self.dddelta)
+                
+                self.Edxy_xxyy = ((3./2)*l*m*(ll - mm)*self.ddsig       +       2*l*m*(mm -  ll )*self.ddpi                 +    0.5*l*m*(ll - mm)*self.dddelta)
+                self.Edyz_xxyy = ((3./2)*m*n*(ll - mm)*self.ddsig       -       m*n*(ones + 2*(ll -  mm) )*self.ddpi        +    m*n*(ones + 0.5*(ll - mm))*self.dddelta)
+                self.Edzx_xxyy = ((3./2)*n*l*(ll - mm)*self.ddsig       +       n*l*(ones - 2*(ll -  mm) )*self.ddpi        -    n*l*(ones - 0.5*(ll - mm))*self.dddelta)
+                
+                self.Edxy_zr = (np.sqrt(3)*l*m*(nn - 0.5*(ll + mm))*self.ddsig      -   np.sqrt(3)*2*l*m*nn*self.ddpi               +   0.5*np.sqrt(3)*l*m*(ones + nn)*self.dddelta)
+                self.Edyz_zr = (np.sqrt(3)*m*n*(nn - 0.5*(ll + mm))*self.ddsig      +   np.sqrt(3)*m*n*(ll + mm - nn)*self.ddpi     -   0.5*np.sqrt(3)*m*n*(ll + mm)*self.dddelta)
+                self.Edzx_zr = (np.sqrt(3)*l*n*(nn - 0.5*(ll + mm))*self.ddsig      +   np.sqrt(3)*l*n*(ll + mm - nn)*self.ddpi     -   0.5*np.sqrt(3)*l*n*(ll + mm)*self.dddelta)
+                
+                self.Edxxyy_xxyy = (0.75*((ll - mm)**2)*self.ddsig      +     (ll + mm - (ll -  mm)**2 )*self.ddpi    +    (nn + 0.25*(ll -  mm)**2)*self.dddelta)
+                self.Edxxyy_zr = (0.5*np.sqrt(3)*(ll - mm)*(nn - 0.5*(ll + mm))*self.ddsig     +   np.sqrt(3)*nn*(mm - ll)*self.ddpi     +   0.25*np.sqrt(3)*(ones + nn)*(ll -  mm)*self.dddelta)
+                self.Edzr_zr = (((nn - 0.5*(ll + mm))**2)*self.ddsig       +      3*nn*(mm + ll)*self.ddpi      +       0.75*((ll +  mm)**2)*self.dddelta)
+                
             
             
             
@@ -692,7 +711,7 @@ def dband_script(con):
     
 
 con = Hconstruct() 
-sband_script(con) 
+dband_script(con) 
 
 
 

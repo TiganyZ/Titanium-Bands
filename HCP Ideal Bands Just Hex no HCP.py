@@ -35,7 +35,7 @@ import scipy as sp
 
 class Hconstruct:
     
-    def __init__(self, k=np.array([0,0,0]), a = 1., d = np.sqrt(2)*((16*np.pi/3.)**(1./3)), ca_ratio = np.sqrt(8/3.),#1.61, #a is in Angstrom
+    def __init__(self, k=np.array([0,0,0]), a = 1., d = ((8*np.pi/(3*np.sqrt(8)))**(1./3)), ca_ratio = np.sqrt(8/3.),#1.61, #a is in Angstrom
                 
                  d1=np.array([1,0,0]), d2=np.array([1,np.sqrt(3),0]), 
                  d3=np.array([0,0,1]), d4 = np.array([1,-np.sqrt(3),0]),
@@ -60,23 +60,26 @@ class Hconstruct:
         self.d5 = (self.a/2.)*d6
         #self.d7 = (self.c)*d7
         self.d6 = (self.a)*d8
-        self.b1 = np.array([1./2.*self.a, ((1/6.)*np.sqrt(3))*self.a, 0.5*self.c])
+        self.b1 = np.array([1./2.*self.a, (1/(2*np.sqrt(3)))*self.a, 0.5*self.c])
         #self.b1 = 2./3*self.d1 + 1./3*self.d2 + 1./2*self.d3
         self.b2 = self.b1 - self.d1
         self.b3 = self.b1 - self.d2
         
-        self.b4 = np.array([1./2.*self.a, ((1/6.)*np.sqrt(3))*self.a, -0.5*self.c])
+        self.b4 = np.array([1./2.*self.a, (1/(2.*np.sqrt(3)))*self.a, -0.5*self.c])
         self.b5 = self.b4 - self.d1
         self.b6 = self.b4 - self.d2
         
         
-        
+        #self.darr = np.asarray([self.d1,self.d2,self.d3,self.d4,self.d5,self.d6,
+        #                   self.b1, self.b2,self.b3,self.b4,self.b5,self.b6])
+        #self.unitdarr = self.darr
         
         self.bmag = np.sqrt((1/3.)*self.a**2 + 0.25*(self.c**2))
                             
                             
-        self.darr = np.asarray([self.d1,self.d2,self.d3,self.d4,self.d5,self.d6,
-                           self.b1/self.bmag, self.b2/self.bmag,self.b3/self.bmag,self.b4/self.bmag,self.b5/self.bmag,self.b6/self.bmag])
+        self.darr = np.asarray([self.d1,self.d2,self.d3,self.d4,self.d5,self.d6
+                           ,self.b1/self.bmag, self.b2/self.bmag,self.b3/self.bmag,self.b4/self.bmag,self.b5/self.bmag,self.b6/self.bmag
+                           ])
         self.l = (self.darr[:, :1].astype(np.complex_))
         self.m = (self.darr[:, 1:2].astype(np.complex_))
         self.n = (self.darr[:, 2:3].astype(np.complex_))
@@ -623,6 +626,25 @@ class Hconstruct:
                  
                  
                     ])
+    
+        M = np.asarray([
+                [np.dot(self.g0_arr,self.Edxy_xy[:6])[0],  np.dot(self.g0_arr,self.Edxy_yz[:6])[0], np.dot(self.g0_arr,self.Edxy_zx[:6])[0],
+                         np.dot(self.g0_arr,self.Edxy_xxyy[:6])[0],  np.dot(self.g0_arr,self.Edxy_zr[:6])[0]  ], 
+                
+                [np.dot(self.g0_arr,self.Edxy_yz[:6])[0],  np.dot(self.g0_arr,self.Edyz_yz[:6])[0], np.dot(self.g0_arr,self.Edyz_zx[:6])[0],
+                         np.dot(self.g0_arr,self.Edyz_xxyy[:6])[0],  np.dot(self.g0_arr,self.Edyz_zr[:6])[0] ], 
+                
+                [np.dot(self.g0_arr,self.Edxy_zx[:6])[0],  np.dot(self.g0_arr,self.Edyz_zx[:6])[0], np.dot(self.g0_arr,self.Edzx_zx[:6])[0],
+                         np.dot(self.g0_arr,self.Edzx_xxyy[:6])[0],  np.dot(self.g0_arr,self.Edzx_zr[:6])[0] ], 
+                           
+                [np.dot(self.g0_arr,self.Edxy_xxyy[:6])[0], np.dot(self.g0_arr,self.Edyz_xxyy[:6])[0], np.dot(self.g0_arr,self.Edzx_xxyy[:6])[0],
+                         np.dot(self.g0_arr,self.Edxxyy_xxyy[:6])[0],  np.dot(self.g0_arr,self.Edxxyy_zr[:6])[0] ], 
+                 
+                [np.dot(self.g0_arr,self.Edxy_zr[:6])[0],  np.dot(self.g0_arr,self.Edyz_zr[:6])[0], np.dot(self.g0_arr,self.Edzx_zr[:6])[0], 
+                         np.dot(self.g0_arr,self.Edxxyy_zr[:6])[0],  np.dot(self.g0_arr,self.Edzr_zr[:6])[0] ], 
+                 
+                 
+                    ])
         #Array of Hamiltonian matrix with energy values 
         return M
         
@@ -664,19 +686,9 @@ class Hconstruct:
     
         #Not sure if this should have zeros in due to the second atom
         M = 12.*np.asarray([
-                [np.dot(self.g0_arr,self.Epxx[:6])[0],  np.dot(self.g0_arr,self.Exy[:6])[0],  np.dot(self.g0_arr,self.Exz[:6])[0],
-                        np.dot(self.g0_arr2,self.Epxx[6:])[0],  np.dot(self.g0_arr2,self.Exy[6:])[0],  np.dot(self.g0_arr2,self.Exz[6:])[0]], 
-                [np.dot(self.g0_arr,self.Exy[:6])[0],  np.dot(self.g0_arr,self.Epyy[:6])[0],  np.dot(self.g0_arr,self.Eyz[:6])[0], 
-                        np.dot(self.g0_arr2,self.Exy[6:])[0],  np.dot(self.g0_arr2,self.Epyy[6:])[0],  np.dot(self.g0_arr2,self.Eyz[6:])[0]], 
-                [np.dot(self.g0_arr,self.Exz[:6])[0],  np.dot(self.g0_arr,self.Eyz[:6])[0],  np.dot(self.g0_arr,self.Epzz[:6])[0],
-                        np.dot(self.g0_arr2,self.Exz[6:])[0],  np.dot(self.g0_arr2,self.Eyz[6:])[0],  np.dot(self.g0_arr2,self.Epzz[6:])[0]],
-                
-                [np.dot(self.g0c_arr2,self.Epxx[6:])[0],  np.dot(self.g0c_arr2,self.Exy[6:])[0],  np.dot(self.g0c_arr2,self.Exz[6:])[0],
-                        np.dot(self.g0c_arr,self.Epxx[:6])[0],  np.dot(self.g0c_arr,self.Exy[:6])[0],  np.dot(self.g0c_arr,self.Exz[:6])[0]], 
-                [np.dot(self.g0c_arr2,self.Exy[6:])[0],  np.dot(self.g0c_arr2,self.Epyy[6:])[0],  np.dot(self.g0c_arr2,self.Eyz[6:])[0], 
-                        np.dot(self.g0c_arr,self.Exy[:6])[0],  np.dot(self.g0c_arr,self.Epyy[:6])[0],  np.dot(self.g0c_arr,self.Eyz[:6])[0]], 
-                [np.dot(self.g0c_arr2,self.Exz[6:])[0],  np.dot(self.g0c_arr2,self.Eyz[6:])[0],  np.dot(self.g0c_arr2,self.Epzz[6:])[0],
-                        np.dot(self.g0c_arr,self.Exz[:6])[0],  np.dot(self.g0c_arr,self.Eyz[:6])[0],  np.dot(self.g0c_arr,self.Epzz[:6])[0]]
+                [np.dot(self.g0_arr,self.Epxx[:6])[0],  np.dot(self.g0_arr,self.Exy[:6])[0],  np.dot(self.g0_arr,self.Exz[:6])[0]], 
+                [np.dot(self.g0_arr,self.Exy[:6])[0],  np.dot(self.g0_arr,self.Epyy[:6])[0],  np.dot(self.g0_arr,self.Eyz[:6])[0]], 
+                [np.dot(self.g0_arr,self.Exz[:6])[0],  np.dot(self.g0_arr,self.Eyz[:6])[0],  np.dot(self.g0_arr,self.Epzz[:6])[0]]
                     ])
         #Array of Hamiltonian matrix with energy values 
         return M
@@ -763,17 +775,17 @@ class Hconstruct:
             self.px_energies.append(eigenvals[0])
             self.py_energies.append(eigenvals[1])
             self.pz_energies.append(eigenvals[2])
-            self.px_energies2.append(eigenvals[3])
-            self.py_energies2.append(eigenvals[4])
-            self.pz_energies2.append(eigenvals[5])
+            #self.px_energies2.append(eigenvals[3])
+            #self.py_energies2.append(eigenvals[4])
+            #self.pz_energies2.append(eigenvals[5])
             self.kvals.append((i/float(loops)))
 
         ax.plot(self.kvals, self.px_energies)#, marker=style, color=k)
         ax.plot(self.kvals, self.py_energies)#, bo)
         ax.plot(self.kvals, self.pz_energies)#, r*)
-        ax.plot(self.kvals, self.px_energies2)#, marker=style, color=k)
-        ax.plot(self.kvals, self.py_energies2)#, bo)
-        ax.plot(self.kvals, self.pz_energies2)#, r*)
+        #ax.plot(self.kvals, self.px_energies2)#, marker=style, color=k)
+        #ax.plot(self.kvals, self.py_energies2)#, bo)
+        #ax.plot(self.kvals, self.pz_energies2)#, r*)
         
         ax.set_title('%s to %s'%(n1, n2)) 
         if reverse==True:
@@ -812,11 +824,11 @@ class Hconstruct:
             self.xxyy_energies.append(eigenvals[3])
             self.zr_energies.append(eigenvals[4])
             
-            self.xy_energies2.append(eigenvals[5])
-            self.yz_energies2.append(eigenvals[6])
-            self.zx_energies2.append(eigenvals[7])
-            self.xxyy_energies2.append(eigenvals[8])
-            self.zr_energies2.append(eigenvals[9])
+            #self.xy_energies2.append(eigenvals[5])
+            #self.yz_energies2.append(eigenvals[6])
+            #self.zx_energies2.append(eigenvals[7])
+            #self.xxyy_energies2.append(eigenvals[8])
+            #self.zr_energies2.append(eigenvals[9])
             self.kvals.append((i/float(loops)))
 
         ax.plot(self.kvals, self.xy_energies)#, marker=style, color=k)
@@ -824,11 +836,11 @@ class Hconstruct:
         ax.plot(self.kvals, self.zx_energies)#, r*)
         ax.plot(self.kvals, self.xxyy_energies)#, r*)
         ax.plot(self.kvals, self.zr_energies)#, r*)
-        ax.plot(self.kvals, self.xy_energies2)#, marker=style, color=k)
-        ax.plot(self.kvals, self.yz_energies2)#, bo)
-        ax.plot(self.kvals, self.zx_energies2)#, r*)
-        ax.plot(self.kvals, self.xxyy_energies2)#, r*)
-        ax.plot(self.kvals, self.zr_energies2)#, r*)
+        #ax.plot(self.kvals, self.xy_energies2)#, marker=style, color=k)
+        #ax.plot(self.kvals, self.yz_energies2)#, bo)
+        #ax.plot(self.kvals, self.zx_energies2)#, r*)
+        #ax.plot(self.kvals, self.xxyy_energies2)#, r*)
+        #ax.plot(self.kvals, self.zr_energies2)#, r*)
         
         ax.set_title('%s to %s'%(n1, n2)) 
         if reverse==True:
@@ -964,7 +976,7 @@ def dband_script(con):
     
 
 con = Hconstruct() 
-dband_script(con) 
+pband_script(con) 
 
 
 

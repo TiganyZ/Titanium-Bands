@@ -35,7 +35,7 @@ import scipy as sp
 
 class Hconstruct:
     
-    def __init__(self, k=np.array([0,0,0]), a = 1., d = np.sqrt(2)*((16*np.pi/3.)**(1./3)), ca_ratio = np.sqrt(8/3.),#1.61, #a is in Angstrom
+    def __init__(self, k=np.array([0,0,0]), a = 1., d = ((8*np.pi/(3*np.sqrt(8)))**(1./3)), ca_ratio = np.sqrt(8/3.),#1.61, #a is in Angstrom
                 
                  d1=np.array([1,0,0]), d2=np.array([1,np.sqrt(3),0]), 
                  d3=np.array([0,0,1]), d4 = np.array([1,-np.sqrt(3),0]),
@@ -60,17 +60,19 @@ class Hconstruct:
         self.d5 = (self.a/2.)*d6
         #self.d7 = (self.c)*d7
         self.d6 = (self.a)*d8
-        self.b1 = np.array([1./2.*self.a, ((1/6.)*np.sqrt(3))*self.a, 0.5*self.c])
+        self.b1 = np.array([1./2.*self.a, (1/(2*np.sqrt(3)))*self.a, 0.5*self.c])
         #self.b1 = 2./3*self.d1 + 1./3*self.d2 + 1./2*self.d3
         self.b2 = self.b1 - self.d1
         self.b3 = self.b1 - self.d2
         
-        self.b4 = np.array([1./2.*self.a, ((1/6.)*np.sqrt(3))*self.a, -0.5*self.c])
+        self.b4 = np.array([1./2.*self.a, (1/(2.*np.sqrt(3)))*self.a, -0.5*self.c])
         self.b5 = self.b4 - self.d1
         self.b6 = self.b4 - self.d2
         
         
-        
+        #self.darr = np.asarray([self.d1,self.d2,self.d3,self.d4,self.d5,self.d6,
+        #                   self.b1, self.b2,self.b3,self.b4,self.b5,self.b6])
+        #self.unitdarr = self.darr
         
         self.bmag = np.sqrt((1/3.)*self.a**2 + 0.25*(self.c**2))
                             

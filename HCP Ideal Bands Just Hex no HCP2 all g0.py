@@ -642,59 +642,59 @@ class Hconstruct:
     
     
         M = np.asarray([
-                [np.dot(self.g0_arr,self.Edxy_xy[:6])[0],  np.dot(self.gdxy_yz_arr,self.Edxy_yz[:6])[0], np.dot(self.gdxy_zx_arr,self.Edxy_zx[:6])[0],
-                         np.dot(self.gdxy_xxyy_arr,self.Edxy_xxyy[:6])[0],  np.dot(self.gdxy_zr_arr,self.Edxy_zr[:6])[0] ,
-                    np.dot(self.g0_arr2,self.Edxy_xy[6:])[0],  np.dot(self.gdxy_yz_arr2,self.Edxy_yz[6:])[0], np.dot(self.gdxy_zx_arr2,self.Edxy_zx[6:])[0],
-                         np.dot(self.gdxy_xxyy_arr2,self.Edxy_xxyy[6:])[0],  np.dot(self.gdxy_zr_arr2,self.Edxy_zr[6:])[0] ], 
+                [np.dot(self.g0_arr,self.Edxy_xy[:6])[0],  np.dot(self.g0_arr,self.Edxy_yz[:6])[0], np.dot(self.g0_arr,self.Edxy_zx[:6])[0],
+                         np.dot(self.g0_arr,self.Edxy_xxyy[:6])[0],  np.dot(self.g0_arr,self.Edxy_zr[:6])[0] ,
+                    np.dot(self.g0_arr2,self.Edxy_xy[6:])[0],  np.dot(self.g0_arr2,self.Edxy_yz[6:])[0], np.dot(self.g0_arr2,self.Edxy_zx[6:])[0],
+                         np.dot(self.g0_arr2,self.Edxy_xxyy[6:])[0],  np.dot(self.g0_arr2,self.Edxy_zr[6:])[0] ], 
                 
-                [np.dot(self.gdxy_yz_arr,self.Edxy_yz[:6])[0],  np.dot(self.g0_arr,self.Edyz_yz[:6])[0], np.dot(self.gdyz_zx_arr,self.Edyz_zx[:6])[0],
-                         np.dot(self.gdyz_xxyy_arr,self.Edyz_xxyy[:6])[0],  np.dot(self.gdyz_zr_arr,self.Edyz_zr[:6])[0], 
-                    np.dot(self.gdxy_yz_arr2,self.Edxy_yz[6:])[0],  np.dot(self.g0_arr2,self.Edyz_yz[6:])[0], np.dot(self.gdyz_zx_arr2,self.Edyz_zx[6:])[0],
-                         np.dot(self.gdyz_xxyy_arr2,self.Edyz_xxyy[6:])[0],  np.dot(self.gdyz_zr_arr2,self.Edyz_zr[6:])[0]], 
+                [np.dot(self.g0_arr,self.Edxy_yz[:6])[0],  np.dot(self.g0_arr,self.Edyz_yz[:6])[0], np.dot(self.g0_arr,self.Edyz_zx[:6])[0],
+                         np.dot(self.g0_arr,self.Edyz_xxyy[:6])[0],  np.dot(self.g0_arr,self.Edyz_zr[:6])[0], 
+                    np.dot(self.g0_arr2,self.Edxy_yz[6:])[0],  np.dot(self.g0_arr2,self.Edyz_yz[6:])[0], np.dot(self.g0_arr2,self.Edyz_zx[6:])[0],
+                         np.dot(self.g0_arr2,self.Edyz_xxyy[6:])[0],  np.dot(self.g0_arr2,self.Edyz_zr[6:])[0]], 
                 
-                [np.dot(self.gdxy_zx_arr,self.Edxy_zx[:6])[0],  np.dot(self.gdyz_zx_arr,self.Edyz_zx[:6])[0], np.dot(self.g0_arr,self.Edzx_zx[:6])[0],
-                         np.dot(self.gdzx_xxyy_arr,self.Edzx_xxyy[:6])[0],  np.dot(self.gdzx_zr_arr,self.Edzx_zr[:6])[0],
-                    np.dot(self.gdxy_zx_arr2,self.Edxy_zx[6:])[0],  np.dot(self.gdyz_zx_arr2,self.Edyz_zx[6:])[0], np.dot(self.g0_arr2,self.Edzx_zx[6:])[0],
-                         np.dot(self.gdzx_xxyy_arr2,self.Edzx_xxyy[6:])[0],  np.dot(self.gdzx_zr_arr2,self.Edzx_zr[6:])[0]], 
+                [np.dot(self.g0_arr,self.Edxy_zx[:6])[0],  np.dot(self.g0_arr,self.Edyz_zx[:6])[0], np.dot(self.g0_arr,self.Edzx_zx[:6])[0],
+                         np.dot(self.g0_arr,self.Edzx_xxyy[:6])[0],  np.dot(self.g0_arr,self.Edzx_zr[:6])[0],
+                    np.dot(self.g0_arr2,self.Edxy_zx[6:])[0],  np.dot(self.g0_arr2,self.Edyz_zx[6:])[0], np.dot(self.g0_arr2,self.Edzx_zx[6:])[0],
+                         np.dot(self.g0_arr2,self.Edzx_xxyy[6:])[0],  np.dot(self.g0_arr2,self.Edzx_zr[6:])[0]], 
                            
-                [np.dot(self.gdxy_xxyy_arr,self.Edxy_xxyy[:6])[0], np.dot(self.gdyz_xxyy_arr,self.Edyz_xxyy[:6])[0], np.dot(self.gdzx_xxyy_arr,self.Edzx_xxyy[:6])[0],
-                         np.dot(self.g0_arr,self.Edxxyy_xxyy[:6])[0],  np.dot(self.gdxxyy_zr_arr,self.Edxxyy_zr[:6])[0],
-                    np.dot(self.gdxy_xxyy_arr2,self.Edxy_xxyy[6:])[0], np.dot(self.gdyz_xxyy_arr2,self.Edyz_xxyy[6:])[0], np.dot(self.gdzx_xxyy_arr2,self.Edzx_xxyy[6:])[0],
-                         np.dot(self.g0_arr2,self.Edxxyy_xxyy[6:])[0],  np.dot(self.gdxxyy_zr_arr2,self.Edxxyy_zr[6:])[0]], 
+                [np.dot(self.g0_arr,self.Edxy_xxyy[:6])[0], np.dot(self.g0_arr,self.Edyz_xxyy[:6])[0], np.dot(self.g0_arr,self.Edzx_xxyy[:6])[0],
+                         np.dot(self.g0_arr,self.Edxxyy_xxyy[:6])[0],  np.dot(self.g0_arr,self.Edxxyy_zr[:6])[0],
+                    np.dot(self.g0_arr2,self.Edxy_xxyy[6:])[0], np.dot(self.g0_arr2,self.Edyz_xxyy[6:])[0], np.dot(self.g0_arr2,self.Edzx_xxyy[6:])[0],
+                         np.dot(self.g0_arr2,self.Edxxyy_xxyy[6:])[0],  np.dot(self.g0_arr2,self.Edxxyy_zr[6:])[0]], 
                  
-                [np.dot(self.gdxy_zr_arr,self.Edxy_zr[:6])[0],  np.dot(self.gdyz_zr_arr,self.Edyz_zr[:6])[0], np.dot(self.gdzx_zr_arr,self.Edzx_zr[:6])[0], 
-                         np.dot(self.gdxxyy_zr_arr,self.Edxxyy_zr[:6])[0],  np.dot(self.g0_arr,self.Edzr_zr[:6])[0],
-                    np.dot(self.gdxy_zr_arr2,self.Edxy_zr[6:])[0],  np.dot(self.gdyz_zr_arr2,self.Edyz_zr[6:])[0], np.dot(self.gdzx_zr_arr2,self.Edzx_zr[6:])[0], 
-                         np.dot(self.gdxxyy_zr_arr2,self.Edxxyy_zr[6:])[0],  np.dot(self.g0_arr2,self.Edzr_zr[6:])[0] ], 
+                [np.dot(self.g0_arr,self.Edxy_zr[:6])[0],  np.dot(self.g0_arr,self.Edyz_zr[:6])[0], np.dot(self.g0_arr,self.Edzx_zr[:6])[0], 
+                         np.dot(self.g0_arr,self.Edxxyy_zr[:6])[0],  np.dot(self.g0_arr,self.Edzr_zr[:6])[0],
+                    np.dot(self.g0_arr2,self.Edxy_zr[6:])[0],  np.dot(self.g0_arr2,self.Edyz_zr[6:])[0], np.dot(self.g0_arr2,self.Edzx_zr[6:])[0], 
+                         np.dot(self.g0_arr2,self.Edxxyy_zr[6:])[0],  np.dot(self.g0_arr2,self.Edzr_zr[6:])[0] ], 
                 
                 
                 
                 
                 
-                [np.dot(self.g0c_arr2,self.Edxy_xy[:6])[0],  np.dot(self.gdxy_yz_arrc2,self.Edxy_yz[:6])[0], np.dot(self.gdxy_zx_arrc2,self.Edxy_zx[:6])[0],
-                         np.dot(self.gdxy_xxyy_arr2,self.Edxy_xxyy[:6])[0],  np.dot(self.gdxy_zr_arrc2,self.Edxy_zr[:6])[0] ,
-                    np.dot(self.g0c_arr,self.Edxy_xy[6:])[0],  np.dot(self.gdxy_yz_arrc,self.Edxy_yz[6:])[0], np.dot(self.gdxy_zx_arrc,self.Edxy_zx[6:])[0],
-                         np.dot(self.gdxy_xxyy_arrc,self.Edxy_xxyy[6:])[0],  np.dot(self.gdxy_zr_arrc,self.Edxy_zr[6:])[0] ], 
+                [np.dot(self.g0c_arr2,self.Edxy_xy[:6])[0],  np.dot(self.g0c_arr2,self.Edxy_yz[:6])[0], np.dot(self.g0c_arr2,self.Edxy_zx[:6])[0],
+                         np.dot(self.g0c_arr2,self.Edxy_xxyy[:6])[0],  np.dot(self.g0c_arr2,self.Edxy_zr[:6])[0] ,
+                    np.dot(self.g0c_arr,self.Edxy_xy[6:])[0],  np.dot(self.g0c_arr,self.Edxy_yz[6:])[0], np.dot(self.g0c_arr,self.Edxy_zx[6:])[0],
+                         np.dot(self.g0c_arr,self.Edxy_xxyy[6:])[0],  np.dot(self.g0c_arr,self.Edxy_zr[6:])[0] ], 
                 
-                [np.dot(self.gdxy_yz_arrc2,self.Edxy_yz[:6])[0],  np.dot(self.g0c_arr2,self.Edyz_yz[:6])[0], np.dot(self.gdyz_zx_arrc2,self.Edyz_zx[:6])[0],
-                         np.dot(self.gdyz_xxyy_arrc2,self.Edyz_xxyy[:6])[0],  np.dot(self.gdyz_zr_arrc2,self.Edyz_zr[:6])[0], 
-                    np.dot(self.gdxy_yz_arrc,self.Edxy_yz[6:])[0],  np.dot(self.g0c_arr,self.Edyz_yz[6:])[0], np.dot(self.gdyz_zx_arr,self.Edyz_zx[6:])[0],
-                         np.dot(self.gdyz_xxyy_arrc,self.Edyz_xxyy[6:])[0],  np.dot(self.gdyz_zr_arrc,self.Edyz_zr[6:])[0]], 
+                [np.dot(self.g0c_arr2,self.Edxy_yz[:6])[0],  np.dot(self.g0c_arr2,self.Edyz_yz[:6])[0], np.dot(self.g0c_arr2,self.Edyz_zx[:6])[0],
+                         np.dot(self.g0c_arr2,self.Edyz_xxyy[:6])[0],  np.dot(self.g0c_arr2,self.Edyz_zr[:6])[0], 
+                    np.dot(self.g0c_arr,self.Edxy_yz[6:])[0],  np.dot(self.g0c_arr,self.Edyz_yz[6:])[0], np.dot(self.g0c_arr,self.Edyz_zx[6:])[0],
+                         np.dot(self.g0c_arr,self.Edyz_xxyy[6:])[0],  np.dot(self.g0c_arr,self.Edyz_zr[6:])[0]], 
                 
-                [np.dot(self.gdxy_zx_arrc2,self.Edxy_zx[:6])[0],  np.dot(self.gdyz_zx_arrc2,self.Edyz_zx[:6])[0], np.dot(self.g0c_arr2,self.Edzx_zx[:6])[0],
-                         np.dot(self.gdzx_xxyy_arrc2,self.Edzx_xxyy[:6])[0],  np.dot(self.gdzx_zr_arrc2,self.Edzx_zr[:6])[0],
-                    np.dot(self.gdxy_zx_arrc,self.Edxy_zx[6:])[0],  np.dot(self.gdyz_zx_arrc,self.Edyz_zx[6:])[0], np.dot(self.g0c_arr,self.Edzx_zx[6:])[0],
-                         np.dot(self.gdzx_xxyy_arrc,self.Edzx_xxyy[6:])[0],  np.dot(self.gdzx_zr_arrc,self.Edzx_zr[6:])[0]], 
+                [np.dot(self.g0c_arr2,self.Edxy_zx[:6])[0],  np.dot(self.g0c_arr2,self.Edyz_zx[:6])[0], np.dot(self.g0c_arr2,self.Edzx_zx[:6])[0],
+                         np.dot(self.g0c_arr2,self.Edzx_xxyy[:6])[0],  np.dot(self.g0c_arr2,self.Edzx_zr[:6])[0],
+                    np.dot(self.g0c_arr,self.Edxy_zx[6:])[0],  np.dot(self.g0c_arr,self.Edyz_zx[6:])[0], np.dot(self.g0c_arr,self.Edzx_zx[6:])[0],
+                         np.dot(self.g0c_arr,self.Edzx_xxyy[6:])[0],  np.dot(self.g0c_arr,self.Edzx_zr[6:])[0]], 
                            
-                [np.dot(self.gdxy_xxyy_arrc2,self.Edxy_xxyy[:6])[0], np.dot(self.gdyz_xxyy_arrc2,self.Edyz_xxyy[:6])[0], np.dot(self.gdzx_xxyy_arrc2,self.Edzx_xxyy[:6])[0],
-                         np.dot(self.g0c_arr2,self.Edxxyy_xxyy[:6])[0],  np.dot(self.gdxxyy_zr_arrc2,self.Edxxyy_zr[:6])[0],
-                    np.dot(self.gdxy_xxyy_arrc,self.Edxy_xxyy[6:])[0], np.dot(self.gdyz_xxyy_arrc,self.Edyz_xxyy[6:])[0], np.dot(self.gdzx_xxyy_arrc,self.Edzx_xxyy[6:])[0],
-                         np.dot(self.g0c_arr,self.Edxxyy_xxyy[6:])[0],  np.dot(self.gdxxyy_zr_arrc,self.Edxxyy_zr[6:])[0]], 
+                [np.dot(self.g0c_arr2,self.Edxy_xxyy[:6])[0], np.dot(self.g0c_arr2,self.Edyz_xxyy[:6])[0], np.dot(self.g0c_arr2,self.Edzx_xxyy[:6])[0],
+                         np.dot(self.g0c_arr2,self.Edxxyy_xxyy[:6])[0],  np.dot(self.g0c_arr2,self.Edxxyy_zr[:6])[0],
+                    np.dot(self.g0c_arr,self.Edxy_xxyy[6:])[0], np.dot(self.g0c_arr,self.Edyz_xxyy[6:])[0], np.dot(self.g0c_arr,self.Edzx_xxyy[6:])[0],
+                         np.dot(self.g0c_arr,self.Edxxyy_xxyy[6:])[0],  np.dot(self.g0c_arr,self.Edxxyy_zr[6:])[0]], 
                  
-                [np.dot(self.gdxy_zr_arrc2,self.Edxy_zr[:6])[0],  np.dot(self.gdyz_zr_arrc2,self.Edyz_zr[:6])[0], np.dot(self.gdzx_zr_arrc2,self.Edzx_zr[:6])[0], 
-                         np.dot(self.gdxxyy_zr_arrc2,self.Edxxyy_zr[:6])[0],  np.dot(self.g0c_arr2,self.Edzr_zr[:6])[0],
-                    np.dot(self.gdxy_zr_arrc,self.Edxy_zr[6:])[0],  np.dot(self.gdyz_zr_arrc,self.Edyz_zr[6:])[0], np.dot(self.gdzx_zr_arrc,self.Edzx_zr[6:])[0], 
-                         np.dot(self.gdxxyy_zr_arrc,self.Edxxyy_zr[6:])[0],  np.dot(self.g0c_arr,self.Edzr_zr[6:])[0] ]
+                [np.dot(self.g0c_arr2,self.Edxy_zr[:6])[0],  np.dot(self.g0c_arr2,self.Edyz_zr[:6])[0], np.dot(self.g0c_arr2,self.Edzx_zr[:6])[0], 
+                         np.dot(self.g0c_arr2,self.Edxxyy_zr[:6])[0],  np.dot(self.g0c_arr2,self.Edzr_zr[:6])[0],
+                    np.dot(self.g0c_arr,self.Edxy_zr[6:])[0],  np.dot(self.g0c_arr,self.Edyz_zr[6:])[0], np.dot(self.g0c_arr,self.Edzx_zr[6:])[0], 
+                         np.dot(self.g0c_arr,self.Edxxyy_zr[6:])[0],  np.dot(self.g0c_arr,self.Edzr_zr[6:])[0] ]
                  
                  
                     ])
@@ -1028,14 +1028,14 @@ def dband_script(con):
     ax7 = axes[6]
     ax8 = axes[7]
     
-    con.band_structure_d(Gamma, K_3, ax1, False, 'Gamma', 'K')
-    con.band_structure_d(K_3, M, ax2, False, 'K', 'M')
+    con.band_structure_d(Gamma, K_2, ax1, False, 'Gamma', 'K')
+    con.band_structure_d(K_2, M, ax2, False, 'K', 'M')
     con.band_structure_d(M, Gamma, ax3, False, 'M', 'Gamma')
     con.band_structure_d(Gamma, A, ax4, False, 'Gamma', 'A')
-    con.band_structure_d(K_3, H_3, ax5, False, 'K', 'H')
-    con.band_structure_d(H_3, L, ax6, False, 'H', 'L')
+    con.band_structure_d(K_2, H_2, ax5, False, 'K', 'H')
+    con.band_structure_d(H_2, L, ax6, False, 'H', 'L')
     con.band_structure_d(L, A, ax7, False, 'L', 'A')
-    con.band_structure_d(A, H_3, ax8, False, 'A', 'H')
+    con.band_structure_d(A, H_2, ax8, False, 'A', 'H')
     
     ax5.set_xlabel('¦K¦')
     ax1.set_ylabel('E (eV)')

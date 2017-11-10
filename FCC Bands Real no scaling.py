@@ -730,7 +730,7 @@ def dband_script(con):
     
 
 con = Hconstruct() 
-pband_script(con) 
+dband_script(con) 
 
 
 

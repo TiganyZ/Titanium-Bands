@@ -591,7 +591,7 @@ class Hconstruct:
             kr = ki + (i/float(loops))*k_diff
             #self.phasefactors(kr )
             self.M = self.Hamiltonian_d(kr)
-            eigenvals = np.linalg.eigh(self.M)[0]
+            eigenvals = np.linalg.eigh(self.M)[0] -2.5
             print('d eigenvalues', eigenvals)
             self.xy_energies.append(eigenvals[0])
             self.yz_energies.append(eigenvals[1])
@@ -720,7 +720,7 @@ def dband_script(con):
     
 
 con = Hconstruct() 
-pband_script(con) 
+dband_script(con) 
 
 
 

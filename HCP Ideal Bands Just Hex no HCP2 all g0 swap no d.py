@@ -42,8 +42,8 @@ class Hconstruct:
                  d5=np.array([-1,-np.sqrt(3),0]), d6=np.array([-1,np.sqrt(3),0]), 
                  d7=np.array([0,0,-1]),d8 = np.array([-1,0,0]),
                 Es=1, Ep=1, 
-                 Ed=1, sssig=-2, spsig=2*np.sqrt(3), ppsig=12., pppi=-6., sdsig=-3.16, pdsig=-6*np.sqrt(15), #sssig to pppi from Harrison and general, d from Titanium solid state table
-                 pdpi=6*np.sqrt(5), ddsigma= -60., ddpi= 40., dddelta= -10., rd = 1.08 ):
+                 Ed=1, sssig=-0.02, spsig=2*np.sqrt(3), ppsig=0.12, pppi=-0.06, sdsig=-3.16, pdsig=-6*np.sqrt(15), #sssig to pppi from Harrison and general, d from Titanium solid state table
+                 pdpi=6*np.sqrt(5), ddsigma= -0.6, ddpi= 0.4, dddelta= -0.1, rd = 1.08 ):
 
         self.a = a
         self.d = d
@@ -93,16 +93,16 @@ class Hconstruct:
         self.Es = Es
         self.Ep = Ep
         self.Ed = Ed
-        self.sssig = sssig/(self.d)
-        self.spsig = spsig/(self.d**2)
-        self.ppsig = ppsig/(self.d**3)
-        self.pppi = pppi/(self.d**3)
-        self.sdsig = sdsig/(self.d)
-        self.pdsig = pdsig/(self.d**4)
-        self.pdpi = pdpi/(self.d**4)
-        self.ddsig = ddsigma/(self.d**5)
-        self.ddpi = ddpi/(self.d**5)
-        self.dddelta = dddelta/(self.d**5)
+        self.sssig = sssig#/(self.d)
+        self.spsig = spsig#/(self.d**2)
+        self.ppsig = ppsig#/(self.d**3)
+        self.pppi = pppi#/(self.d**3)
+        self.sdsig = sdsig#/(self.d)
+        self.pdsig = pdsig#/(self.d**4)
+        self.pdpi = pdpi#/(self.d**4)
+        self.ddsig = ddsigma#/(self.d**5)
+        self.ddpi = ddpi#/(self.d**5)
+        self.dddelta = dddelta#/(self.d**5)
         self.k = k
         self.rd = rd
         self.energiess1 = []
@@ -618,7 +618,7 @@ class Hconstruct:
         self.phasefactors(kv)
     
     
-        M = np.asarray([
+        M = 13.6*np.asarray([
                 [np.dot(self.g0_arr,self.Edxy_xy[:6])[0],  np.dot(self.g0_arr,self.Edxy_yz[:6])[0], np.dot(self.g0_arr,self.Edxy_zx[:6])[0],
                          np.dot(self.g0_arr,self.Edxy_xxyy[:6])[0],  np.dot(self.g0_arr,self.Edxy_zr[:6])[0] ,
                     np.dot(self.g0_arr2,self.Edxy_xy[6:])[0],  np.dot(self.g0_arr2,self.Edxy_yz[6:])[0], np.dot(self.g0_arr2,self.Edxy_zx[6:])[0],
@@ -703,7 +703,7 @@ class Hconstruct:
         self.phasefactors(kv)
     
         #Not sure if this should have zeros in due to the second atom
-        M = np.asarray([
+        M = 13.6*np.asarray([
                 [np.dot(self.g0_arr,self.Epxx[:6])[0],  np.dot(self.g0_arr,self.Exy[:6])[0],  np.dot(self.g0_arr,self.Exz[:6])[0],
                         np.dot(self.g0_arr2,self.Epxx[6:])[0],  np.dot(self.g0_arr2,self.Exy[6:])[0],  np.dot(self.g0_arr2,self.Exz[6:])[0]], 
                 [np.dot(self.g0_arr,self.Exy[:6])[0],  np.dot(self.g0_arr,self.Epyy[:6])[0],  np.dot(self.g0_arr,self.Eyz[:6])[0], 
@@ -736,7 +736,7 @@ class Hconstruct:
         self.phasefactors(kv)
     
     
-        M = np.array([
+        M = 13.6*np.array([
                 [np.dot(self.g0_arr,self.Es[:6])[0], np.dot(self.g0_arr2,self.Es[6:])[0] ],
                 [np.dot(self.g0c_arr2,self.Es[6:])[0], np.dot(self.g0c_arr,self.Es[:6])[0] ]
                     ])
@@ -765,7 +765,7 @@ class Hconstruct:
             kr = ki + (i/loops)*k_diff
             #self.phasefactors(kr )
             self.M = self.Hamiltonian_s(kr)
-            eigenvals = np.linalg.eigh(self.M)[0]
+            eigenvals = np.linalg.eigh(self.M)[0] -6.75
             print('s eigenvalues', eigenvals)
             self.energiess1.append(eigenvals[0])
             self.energiess2.append(eigenvals[1])
@@ -798,7 +798,7 @@ class Hconstruct:
             kr = ki + (i/float(loops))*k_diff
             #self.phasefactors(kr )
             self.M = self.Hamiltonian_p(kr)
-            eigenvals = np.linalg.eigh(self.M)[0]
+            eigenvals = np.linalg.eigh(self.M)[0] -2.5
             print('p eigenvalues', eigenvals)
             self.px_energies.append(eigenvals[0])
             self.py_energies.append(eigenvals[1])
@@ -844,7 +844,7 @@ class Hconstruct:
             kr = ki + (i/float(loops))*k_diff
             #self.phasefactors(kr )
             self.M = self.Hamiltonian_d(kr)
-            eigenvals = np.linalg.eigh(self.M)[0]
+            eigenvals = np.linalg.eigh(self.M)[0] -8.5
             print('d eigenvalues', eigenvals)
             self.xy_energies.append(eigenvals[0])
             self.yz_energies.append(eigenvals[1])
@@ -1012,7 +1012,7 @@ def dband_script(con):
     
 
 con = Hconstruct() 
-pband_script(con) 
+dband_script(con) 
 
 
 
